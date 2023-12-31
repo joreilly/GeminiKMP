@@ -1,5 +1,11 @@
-Kotlin Multiplatform sample that uses Gemini Generative AI APIs.  Runs on Android, iOS, Desktop and Wasm based Compose for Web.
-Uses [Gemini REST APIs](https://ai.google.dev/tutorials/rest_quickstart) from common code using Ktor.
+Kotlin/Compose Multiplatform sample to demonstrate Gemini Generative AI APIs (initially text based for now). Uses [Gemini REST APIs](https://ai.google.dev/tutorials/rest_quickstart) from common code using Ktor.
+
+
+Running on
+* iOS 
+* Android
+* Desktop
+* Web (Wasm)
 
 Set your Gemini API key in `local.properties`
 

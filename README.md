@@ -9,6 +9,11 @@ Running on
 
 Set your Gemini API key in `local.properties`
 
+
+To do
+* Use Compose Multiplatform library to display markdown returned (waiting on one that supports Wasm based Compose for Web)
+* Allow uploading images and running queries on those.
+
 ## Screenshots
 
 ### iOS
@@ -25,4 +30,5 @@ Set your Gemini API key in `local.properties`
 
 ### Compose for Desktop
 
-<img width="912" alt="Screenshot 2023-12-31 at 13 09 43" src="https://github.com/joreilly/GeminiKMP/assets/6302/45004caa-09f5-4bb9-a1e8-2ba72e89273c">
+<img width="945" alt="Screenshot 2023-12-31 at 14 34 28" src="https://github.com/joreilly/GeminiKMP/assets/6302/e2798cc2-2f1a-411e-a360-68b755c7686d">
+

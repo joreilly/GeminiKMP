@@ -4,8 +4,11 @@
 # Log file
 *.log
 
+/local.properties
 **/.DS_Store
 **/build/
+.gradle
+**/.idea/*
 
 *.xcworkspacedata
 

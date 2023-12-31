@@ -1,4 +1,4 @@
-Kotlin/Compose Multiplatform sample to demonstrate Gemini Generative AI APIs (initially text based for now). Uses [Gemini REST APIs](https://ai.google.dev/tutorials/rest_quickstart) from common code using Ktor.
+Kotlin/Compose Multiplatform sample to demonstrate Gemini Generative AI APIs (text based queries for now). Uses [Gemini REST APIs](https://ai.google.dev/tutorials/rest_quickstart) from common code using Ktor.
 
 
 Running on

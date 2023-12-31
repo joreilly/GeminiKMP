@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -28,7 +29,8 @@ fun App() {
 
     val coroutineScope = rememberCoroutineScope()
     var prompt by remember { mutableStateOf("Summarize the benefits of Kotlin Multiplatform") }
-    var content by mutableStateOf("")
+    var content by remember { mutableStateOf("") }
+    var showProgress by remember { mutableStateOf(false) }
 
     MaterialTheme {
         Column(
@@ -46,7 +48,9 @@ fun App() {
                     onClick = {
                         if (prompt.isNotBlank()) {
                             coroutineScope.launch {
+                                showProgress = true
                                 content = generateContent(api, prompt)
+                                showProgress = false
                             }
                         }
                     },
@@ -61,7 +65,11 @@ fun App() {
             }
 
             Spacer(Modifier.height(16.dp))
-            Text(content)
+            if (showProgress) {
+                CircularProgressIndicator()
+            } else {
+                Text(content)
+            }
         }
     }
 }

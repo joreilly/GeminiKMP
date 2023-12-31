@@ -1,5 +1,6 @@
 import dev.johnoreilly.gemini.BuildKonfig
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -25,7 +26,8 @@ data class Error(val message: String)
 @Serializable
 data class GenerateContentResponse(val error: Error? = null, val candidates: List<Candidate>? = null)
 
-
+@Serializable
+data class GenerateContentRequest(val contents: Content)
 
 class GeminiApi {
     private val baseUrl = " https://generativelanguage.googleapis.com/v1beta/models"
@@ -38,17 +40,15 @@ class GeminiApi {
         }
     }
 
+    suspend fun generateContent(prompt: String): GenerateContentResponse {
+        val part = Part(text = prompt)
+        val contents = Content(listOf(part))
+        val request = GenerateContentRequest(contents)
 
-    suspend fun generateContent(prompt: String) = client.post("$baseUrl/gemini-pro:generateContent") {
-        contentType(ContentType.Application.Json)
-        url {
-            parameters.append("key", apiKey)
-        }
-        setBody("{\n" +
-                "      \"contents\": [{\n" +
-                "        \"parts\":[{\n" +
-                "          \"text\": \"$prompt\"}]}]}")
+        return client.post("$baseUrl/gemini-pro:generateContent") {
+            contentType(ContentType.Application.Json)
+            url { parameters.append("key", apiKey) }
+            setBody(request)
+        }.body<GenerateContentResponse>()
     }
-
-
 }

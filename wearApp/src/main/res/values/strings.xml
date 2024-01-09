@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GeminiKMP</string>
+    <string name="prompt_input">Voice Prompt</string>
+</resources>

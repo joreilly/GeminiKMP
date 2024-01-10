@@ -4,6 +4,7 @@ Kotlin/Compose Multiplatform sample to demonstrate Gemini Generative AI APIs (te
 Running on
 * iOS 
 * Android
+* Wear OS (contributed by https://github.com/yschimke)
 * Desktop
 * Web (Wasm)
 

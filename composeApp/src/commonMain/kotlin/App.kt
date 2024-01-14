@@ -1,5 +1,7 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +30,7 @@ import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 
-@OptIn(ExperimentalEncodingApi::class)
+@OptIn(ExperimentalEncodingApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun App() {
     val api = remember { GeminiApi() }
@@ -50,7 +52,7 @@ fun App() {
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth().padding(16.dp)
         ) {
-            Row {
+            FlowRow {
                 TextField(
                     value = prompt,
                     onValueChange = { prompt = it },

@@ -14,9 +14,6 @@ Related posts:
 * [Exploring use of Gemini Generative AI APIs in a Kotlin/Compose Multiplatform project](https://johnoreilly.dev/posts/gemini-kotlin-multiplatform/)
 
 
-To do
-* Use Compose Multiplatform library to display markdown returned (waiting on one that supports Wasm based Compose for Web)
-* Allow uploading images and running queries on those.
 
 ## Screenshots
 

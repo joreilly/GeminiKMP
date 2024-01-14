@@ -27,9 +27,16 @@ Related posts:
 
 ### Wasm based Compose for Web
 
-<img width="1129" alt="Screenshot 2023-12-31 at 13 01 02" src="https://github.com/joreilly/GeminiKMP/assets/6302/f128bf8f-499b-40e9-a4bd-0674aa0f9240">
+<img width="815" alt="Screenshot 2023-12-31 at 13 01 02" src="https://github.com/joreilly/GeminiKMP/assets/6302/f128bf8f-499b-40e9-a4bd-0674aa0f9240">
+
+<img width="815" alt="Screenshot 2024-01-14 at 19 26 05" src="https://github.com/joreilly/GeminiKMP/assets/6302/4fd5adda-c9c4-42c3-970c-d1a8cda05b0a">
+
 
 ### Compose for Desktop
 
-<img width="945" alt="Screenshot 2023-12-31 at 14 34 28" src="https://github.com/joreilly/GeminiKMP/assets/6302/e2798cc2-2f1a-411e-a360-68b755c7686d">
+<img width="815" alt="Screenshot 2023-12-31 at 14 34 28" src="https://github.com/joreilly/GeminiKMP/assets/6302/e2798cc2-2f1a-411e-a360-68b755c7686d">
+
+<img width="815" alt="Screenshot 2024-01-14 at 17 41 26" src="https://github.com/joreilly/GeminiKMP/assets/6302/22176939-80a1-45df-878c-c75807f85a10">
+
+
 

@@ -69,16 +69,20 @@ kotlin {
 
             implementation(libs.ktor.client.android)
             implementation(libs.voyager)
+            implementation("com.darkrockstudios:mpfilepicker:3.1.0")
         }
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.java)
+            implementation("com.darkrockstudios:mpfilepicker:3.1.0")
         }
 
         appleMain.dependencies {
             implementation(libs.ktor.client.darwin)
-        }    }
+            implementation("com.darkrockstudios:mpfilepicker:3.1.0")
+        }
+    }
 }
 
 android {

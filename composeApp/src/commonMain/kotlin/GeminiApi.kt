@@ -12,7 +12,10 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 @Serializable
-data class Part(val text: String)
+data class Part(val text: String? = null, val inline_data: InlineData? = null)
+
+@Serializable
+data class InlineData(val mime_type: String, val data: String)
 
 @Serializable
 data class Content(val parts: List<Part>)
@@ -30,7 +33,7 @@ data class GenerateContentResponse(val error: Error? = null, val candidates: Lis
 data class GenerateContentRequest(val contents: Content)
 
 class GeminiApi {
-    private val baseUrl = " https://generativelanguage.googleapis.com/v1beta/models"
+    private val baseUrl = "https://generativelanguage.googleapis.com/v1beta/models"
     private val apiKey = BuildKonfig.GEMINI_API_KEY
 
     @OptIn(ExperimentalSerializationApi::class)
@@ -41,11 +44,26 @@ class GeminiApi {
     }
 
     suspend fun generateContent(prompt: String): GenerateContentResponse {
-        val part = Part(text = prompt)
-        val contents = Content(listOf(part))
+        val textPart = Part(text = prompt)
+        val contents = Content(listOf(textPart))
         val request = GenerateContentRequest(contents)
 
         return client.post("$baseUrl/gemini-pro:generateContent") {
+            contentType(ContentType.Application.Json)
+            url { parameters.append("key", apiKey) }
+            setBody(request)
+        }.body<GenerateContentResponse>()
+    }
+
+
+    suspend fun generateContent(prompt: String, imageData: String): GenerateContentResponse {
+        val inlineData = InlineData("image/jpeg", imageData)
+        val textPart = Part(text = prompt)
+        val imagePart = Part(inline_data = inlineData)
+        val contents = Content(listOf(textPart, imagePart))
+        val request = GenerateContentRequest(contents)
+
+        return client.post("$baseUrl/gemini-pro-vision:generateContent") {
             contentType(ContentType.Application.Json)
             url { parameters.append("key", apiKey) }
             setBody(request)

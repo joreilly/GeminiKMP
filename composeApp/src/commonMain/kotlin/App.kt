@@ -22,10 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import org.jetbrains.skia.Image
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
@@ -93,7 +91,7 @@ fun App() {
 
                     imageData?.let {
                         val decodedBytes = Base64.Default.decode(imageData!!)
-                        image = Image.makeFromEncoded(decodedBytes).toComposeImageBitmap()
+                        image = decodedBytes.toComposeImageBitmap()
                     }
                 }
             }

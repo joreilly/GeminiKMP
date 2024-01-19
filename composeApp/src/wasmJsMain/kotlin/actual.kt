@@ -1,3 +1,4 @@
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.ImageBitmap
@@ -9,6 +10,11 @@ import kotlin.js.Promise
 
 actual fun ByteArray.toComposeImageBitmap(): ImageBitmap {
     return Image.makeFromEncoded(this).toComposeImageBitmap()
+}
+
+@Composable
+actual fun GeminiMarkdown(content: String) {
+    Text(content)
 }
 
 

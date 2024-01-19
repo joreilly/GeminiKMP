@@ -1,16 +1,22 @@
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import com.darkrockstudios.libraries.mpfilepicker.FilePicker
+import com.mikepenz.markdown.m3.Markdown
 import kotlinx.coroutines.launch
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 actual fun ByteArray.toComposeImageBitmap(): ImageBitmap {
     return BitmapFactory.decodeByteArray(this, 0, size).asImageBitmap()
+}
+
+
+@Composable
+actual fun GeminiMarkdown(content: String) {
+    Markdown(content)
 }
 
 

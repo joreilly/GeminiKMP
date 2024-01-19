@@ -111,7 +111,7 @@ fun App() {
             if (showProgress) {
                 CircularProgressIndicator()
             } else {
-                Text(content)
+                GeminiMarkdown(content)
             }
         }
     }

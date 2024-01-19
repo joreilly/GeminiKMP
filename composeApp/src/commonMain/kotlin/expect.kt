@@ -7,6 +7,10 @@ expect fun ByteArray.toComposeImageBitmap(): ImageBitmap
 typealias ImageFileImported = (String, String?) -> Unit
 
 
+
+@Composable
+expect fun GeminiMarkdown(content: String)
+
 @Composable
 expect fun ImagePicker(
     show: Boolean,

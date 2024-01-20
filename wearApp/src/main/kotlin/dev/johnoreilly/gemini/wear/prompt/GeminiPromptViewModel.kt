@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.horologist.ai.ui.model.FailedResponseUiModel
 import com.google.android.horologist.ai.ui.model.ModelInstanceUiModel
-import com.google.android.horologist.ai.ui.model.PromptResponseUiModel
+import com.google.android.horologist.ai.ui.model.PromptOrResponseUiModel
 import com.google.android.horologist.ai.ui.model.TextPromptUiModel
 import com.google.android.horologist.ai.ui.model.TextResponseUiModel
 import com.google.android.horologist.ai.ui.screens.PromptUiState
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class GeminiPromptViewModel : ViewModel() {
     val api = GeminiApi()
 
-    val previousQuestions: MutableStateFlow<List<PromptResponseUiModel>> =
+    val previousQuestions: MutableStateFlow<List<PromptOrResponseUiModel>> =
         MutableStateFlow(listOf())
     val pendingQuestion: MutableStateFlow<TextPromptUiModel?> =
         MutableStateFlow(null)
@@ -42,7 +42,7 @@ class GeminiPromptViewModel : ViewModel() {
 
     private suspend fun queryForPrompt(
         enteredPrompt: String,
-    ): PromptResponseUiModel {
+    ): PromptOrResponseUiModel {
         return try {
             val result = api.generateContent(enteredPrompt)
             return if (result.candidates != null) {

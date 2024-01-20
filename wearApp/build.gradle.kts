@@ -1,4 +1,5 @@
-import java.io.FileInputStream
+@file:Suppress("UnstableApiUsage")
+
 import java.util.Properties
 
 val localProperties = Properties().apply {
@@ -30,6 +31,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+        isCoreLibraryDesugaringEnabled = true
     }
 
     buildFeatures {
@@ -76,11 +78,13 @@ kotlin {
 
 dependencies {
     implementation(libs.compose.foundation)
-    implementation("com.google.android.horologist:horologist-composables:0.5.18")
-    implementation("com.google.android.horologist:horologist-compose-layout:0.5.18")
-    implementation("com.google.android.horologist:horologist-ai-ui:0.5.18")
-    implementation("androidx.compose.material:material-icons-extended:1.5.4")
+    implementation(libs.horologist.composables)
+    implementation(libs.horologist.compose.layout)
+    implementation(libs.horologist.ai.ui)
+    implementation(libs.markdown.renderer.core)
+    implementation(libs.compose.material.iconsext)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.bundles.ktor.common)
     implementation(libs.ktor.client.okhttp)
+    coreLibraryDesugaring(libs.desugar)
 }

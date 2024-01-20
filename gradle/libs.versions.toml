@@ -14,6 +14,7 @@ compose = "1.5.4"
 compose-compiler = "1.5.7"
 compose-plugin = "1.6.0-alpha01"
 composeWindowSize = "0.5.0-alpha03"
+horologist = "0.5.19"
 imageLoader = "1.7.1"
 junit = "4.13.2"
 koalaplot = "0.5.1"
@@ -46,7 +47,12 @@ compose-material = { module = "androidx.compose.material:material", version.ref 
 compose-window-size = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "composeWindowSize" }
 mpfilepicker = { module = "com.darkrockstudios:mpfilepicker", version.ref = "mpFilePicker" }
 markdown-renderer = { module = "com.mikepenz:multiplatform-markdown-renderer-m3", version.ref = "markdownRenderer" }
+markdown-renderer-core = { module = "com.mikepenz:multiplatform-markdown-renderer", version.ref = "markdownRenderer" }
 
+horologist-composables = { module = "com.google.android.horologist:horologist-composables", version.ref = "horologist" }
+horologist-compose-layout = { module = "com.google.android.horologist:horologist-compose-layout", version.ref = "horologist" }
+horologist-ai-ui = { module = "com.google.android.horologist:horologist-ai-ui", version.ref = "horologist" }
+compose-material-iconsext = "androidx.compose.material:material-icons-extended:1.5.4"
 
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 
@@ -65,7 +71,7 @@ ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.r
 voyager = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 imageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "imageLoader" }
 koalaplot = { module = "io.github.koalaplot:koalaplot-core", version.ref = "koalaplot" }
-
+desugar = "com.android.tools:desugar_jdk_libs:2.0.4"
 
 [bundles]
 ktor-common = ["ktor-client-core", "ktor-client-json", "ktor-client-logging", "ktor-client-serialization", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]

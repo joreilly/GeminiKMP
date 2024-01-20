@@ -134,36 +134,29 @@ compose.desktop {
     }
 }
 
-val localProperties = Properties()
-localProperties.load(rootProject.file("local.properties").reader())
+//val localProperties = Properties()
+//localProperties.load(rootProject.file("local.properties").reader())
 
 buildkonfig {
     packageName = "dev.johnoreilly.gemini"
 
-    val props = Properties()
-    try {
-        props.load(file("../local.properties").inputStream())
-    } catch (e: Exception) {
+    val localPropsFile = rootProject.file("local.properties")
+    println(localPropsFile)
+    val localProperties = Properties()
+    if (localPropsFile.exists()) {
+        try {
+            localProperties.load(localPropsFile.inputStream())
+        } catch (e: Exception) {
+        }
     }
-
     defaultConfigs {
         buildConfigField(
             FieldSpec.Type.STRING,
             "GEMINI_API_KEY",
-            props["gemini_api_key"]?.toString() ?: "abc"
+            localProperties["gemini_api_key"]?.toString() ?: "abc"
         )
     }
-//
-//
-//    defaultConfigs {
-//        defaultConfigs {
-//            buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "API_KEY", localProperties.getProperty("value") ?: "")
-//
-//            buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "NAME", "VALUE")
-//        }
-////        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
-////            "API_KEY", ((project.findProperty("API_KEY") ?: "") as String))
-//    }
+
 }
 
 compose.experimental {

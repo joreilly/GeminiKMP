@@ -64,6 +64,7 @@ fun App() {
                             coroutineScope.launch {
                                 showProgress = true
                                 content = generateContent(api, prompt, imageData)
+                                println(content)
                                 showProgress = false
                             }
                         }
@@ -122,6 +123,7 @@ suspend fun generateContent(api: GeminiApi, prompt: String, imageData: String? =
     println("prompt = $prompt")
     val result = if (imageData != null) api.generateContent(prompt, imageData)
     else api.generateContent(prompt)
+    println(result)
     return if (result.candidates != null) {
         result.candidates[0].content.parts[0].text ?: ""
     } else {

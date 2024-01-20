@@ -2,10 +2,6 @@
 
 import java.util.Properties
 
-val localProperties = Properties().apply {
-    load(project.rootProject.file("local.properties").inputStream())
-}
-
 plugins {
     alias(libs.plugins.androidApplication)
     kotlin("android")
@@ -20,6 +16,16 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
+
+        val localPropsFile = rootProject.file("local.properties")
+        println(localPropsFile)
+        val localProperties = Properties()
+        if (localPropsFile.exists()) {
+            try {
+                localProperties.load(localPropsFile.inputStream())
+            } catch (e: Exception) {
+            }
+        }
 
         buildConfigField(
             "String",

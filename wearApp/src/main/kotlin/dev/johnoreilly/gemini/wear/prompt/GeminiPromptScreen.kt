@@ -15,13 +15,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.wear.compose.material.Card
+import androidx.wear.compose.material.CardDefaults
+import androidx.wear.compose.material.MaterialTheme
+import com.google.android.horologist.ai.ui.components.PromptOrResponseDisplay
+import com.google.android.horologist.ai.ui.model.PromptOrResponseUiModel
+import com.google.android.horologist.ai.ui.model.TextResponseUiModel
 import com.google.android.horologist.ai.ui.screens.PromptScreen
 import com.google.android.horologist.ai.ui.screens.PromptUiState
 import com.google.android.horologist.compose.layout.ScalingLazyColumnState
 import com.google.android.horologist.compose.layout.ScreenScaffold
 import com.google.android.horologist.compose.layout.rememberColumnState
 import com.google.android.horologist.compose.material.Button
+import com.mikepenz.markdown.compose.Markdown
 import dev.johnoreilly.gemini.R
+import dev.johnoreilly.gemini.wear.markdown.wearMaterialColors
+import dev.johnoreilly.gemini.wear.markdown.wearMaterialTypography
 
 @Composable
 fun GeminiPromptScreen(
@@ -86,6 +95,41 @@ private fun GeminiPromptScreen(
             columnState = columnState,
             modifier = modifier,
             promptEntry = promptEntry,
+            promptDisplay = { GeminiPromptDisplay(it) }
+        )
+    }
+}
+
+@Composable
+private fun GeminiPromptDisplay(it: PromptOrResponseUiModel) {
+    if (it is TextResponseUiModel) {
+        GeminiTextResponseCard(it)
+    } else {
+        PromptOrResponseDisplay(
+            promptResponse = it,
+            onClick = {},
+        )
+    }
+}
+
+@Composable
+fun GeminiTextResponseCard(
+    textResponseUiModel: TextResponseUiModel,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        onClick = onClick,
+        backgroundPainter = CardDefaults.cardBackgroundPainter(
+            MaterialTheme.colors.surface,
+            MaterialTheme.colors.surface,
+        ),
+    ) {
+        Markdown(
+            textResponseUiModel.text,
+            colors = wearMaterialColors(),
+            typography = wearMaterialTypography(),
         )
     }
 }

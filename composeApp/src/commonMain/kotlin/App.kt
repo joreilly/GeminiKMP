@@ -2,7 +2,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,7 +25,6 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 
@@ -37,7 +35,7 @@ fun App() {
 
     val coroutineScope = rememberCoroutineScope()
     var prompt by remember { mutableStateOf("") }
-    var imageData by remember { mutableStateOf<String?>(null) }
+    var base64EncodedImageData by remember { mutableStateOf<String?>(null) }
     var content by remember { mutableStateOf("") }
     var showProgress by remember { mutableStateOf(false) }
     var showImagePicker by remember { mutableStateOf(false) }
@@ -63,7 +61,7 @@ fun App() {
                         if (prompt.isNotBlank()) {
                             coroutineScope.launch {
                                 showProgress = true
-                                content = generateContent(api, prompt, imageData)
+                                content = generateContent(api, prompt, base64EncodedImageData)
                                 println(content)
                                 showProgress = false
                             }
@@ -87,14 +85,13 @@ fun App() {
                     Text("Select Image")
                 }
 
-                ImagePicker(show = showImagePicker) { file, data ->
+                ImagePicker(show = showImagePicker) { file, base64Data, imageData ->
                     showImagePicker = false
                     filePath = file
-                    imageData = data
+                    base64EncodedImageData = base64Data
 
                     imageData?.let {
-                        val decodedBytes = Base64.Default.decode(imageData!!)
-                        image = decodedBytes.toComposeImageBitmap()
+                        image = imageData.toComposeImageBitmap()
                     }
                 }
             }

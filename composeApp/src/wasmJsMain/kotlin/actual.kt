@@ -5,6 +5,8 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import kotlinx.coroutines.await
 import org.jetbrains.skia.Image
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.js.Promise
 
 
@@ -18,6 +20,7 @@ actual fun GeminiMarkdown(content: String) {
 }
 
 
+@OptIn(ExperimentalEncodingApi::class)
 @Composable
 actual fun ImagePicker(
     show: Boolean,
@@ -28,7 +31,8 @@ actual fun ImagePicker(
     LaunchedEffect(show) {
         if (show) {
             val data = importImageFile()
-            onImageSelected("", data)
+            val rawData = Base64.decode(data.toString())
+            onImageSelected("", rawData)
         }
     }
 }

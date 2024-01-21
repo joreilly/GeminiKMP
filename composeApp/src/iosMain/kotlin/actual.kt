@@ -44,8 +44,7 @@ actual fun ImagePicker(
             file?.let {
                 val platformFile = file.platformFile as NSURL
                 val imageData = platformFile.readBytes()
-                val base64EncodedImageData = Base64.encode(imageData)
-                onImageSelected(file.path, base64EncodedImageData, imageData)
+                onImageSelected(file.path, imageData)
             }
         }
     }

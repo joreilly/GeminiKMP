@@ -57,17 +57,17 @@ kotlin {
             implementation(compose.components.resources)
 
             implementation(libs.kotlinx.coroutines)
-            implementation(libs.bundles.ktor.common)
 
             implementation(libs.koalaplot)
             api(libs.compose.window.size)
+
+            api(libs.generativeai)
         }
 
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
 
-            implementation(libs.ktor.client.android)
             implementation(libs.voyager)
             implementation(libs.mpfilepicker)
             implementation(libs.markdown.renderer)

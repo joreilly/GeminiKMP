@@ -14,6 +14,7 @@ compose = "1.5.4"
 compose-compiler = "1.5.7"
 compose-plugin = "1.6.0-alpha01"
 composeWindowSize = "0.5.0-alpha03"
+generativeai = "0.1.2-0.0.1-wasm"
 horologist = "0.5.19"
 imageLoader = "1.7.1"
 junit = "4.13.2"
@@ -28,6 +29,7 @@ markdownRenderer = "0.13.0-a01"
 
 
 [libraries]
+generativeai = { module = "dev.shreyaspatil.generativeai:generativeai-google", version.ref = "generativeai" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

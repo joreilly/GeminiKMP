@@ -24,6 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.unit.dp
+import dev.shreyaspatil.ai.client.generativeai.type.GenerateContentResponse
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlin.io.encoding.ExperimentalEncodingApi
 
@@ -35,7 +39,7 @@ fun App() {
 
     val coroutineScope = rememberCoroutineScope()
     var prompt by remember { mutableStateOf("") }
-    var base64EncodedImageData by remember { mutableStateOf<String?>(null) }
+    var selectedImageData by remember { mutableStateOf<ByteArray?>(null) }
     var content by remember { mutableStateOf("") }
     var showProgress by remember { mutableStateOf(false) }
     var showImagePicker by remember { mutableStateOf(false) }
@@ -60,10 +64,11 @@ fun App() {
                     onClick = {
                         if (prompt.isNotBlank()) {
                             coroutineScope.launch {
-                                showProgress = true
-                                content = generateContent(api, prompt, base64EncodedImageData)
+                                generateContentAsFlow(api, prompt, selectedImageData)
+                                    .onStart { showProgress = true }
+                                    .onCompletion { showProgress = false }
+                                    .collect { content += it.text }
                                 println(content)
-                                showProgress = false
                             }
                         }
                     },
@@ -85,11 +90,10 @@ fun App() {
                     Text("Select Image")
                 }
 
-                ImagePicker(show = showImagePicker) { file, base64Data, imageData ->
+                ImagePicker(show = showImagePicker) { file, imageData ->
                     showImagePicker = false
                     filePath = file
-                    base64EncodedImageData = base64Data
-
+                    selectedImageData = imageData
                     imageData?.let {
                         image = imageData.toComposeImageBitmap()
                     }
@@ -116,14 +120,14 @@ fun App() {
 }
 
 
-suspend fun generateContent(api: GeminiApi, prompt: String, imageData: String? = null): String {
-    println("prompt = $prompt")
-    val result = if (imageData != null) api.generateContent(prompt, imageData)
-    else api.generateContent(prompt)
-    println(result)
-    return if (result.candidates != null) {
-        result.candidates[0].content.parts[0].text ?: ""
+fun generateContentAsFlow(
+    api: GeminiApi,
+    prompt: String,
+    imageData: ByteArray? = null
+): Flow<GenerateContentResponse> {
+    return if (imageData != null) {
+        api.generateContent(prompt, imageData)
     } else {
-        "No results"
+        api.generateContent(prompt)
     }
 }

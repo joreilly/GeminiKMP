@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 expect fun ByteArray.toComposeImageBitmap(): ImageBitmap
 
 
-typealias ImageFileImported = (String, String?, ByteArray?) -> Unit
+typealias ImageFileImported = (filePath: String, data: ByteArray?) -> Unit
 
 
 

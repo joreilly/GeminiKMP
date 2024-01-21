@@ -44,14 +44,8 @@ class GeminiPromptViewModel : ViewModel() {
         enteredPrompt: String,
     ): PromptOrResponseUiModel {
         return try {
-            val result = api.generateContent(enteredPrompt)
-            return if (result.candidates != null) {
-                TextResponseUiModel(
-                    result.candidates[0].content.parts[0].text
-                )
-            } else {
-                FailedResponseUiModel("No results")
-            }
+            val text = api.generateContent(enteredPrompt).text ?: error("No results")
+            TextResponseUiModel(text)
         } catch (e: Exception) {
             FailedResponseUiModel(e.toString())
         }

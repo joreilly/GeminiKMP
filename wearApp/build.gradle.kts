@@ -90,7 +90,6 @@ dependencies {
     implementation(libs.markdown.renderer.core)
     implementation(libs.compose.material.iconsext)
     implementation(libs.kotlinx.coroutines)
-    implementation(libs.bundles.ktor.common)
-    implementation(libs.ktor.client.okhttp)
+    implementation(libs.generativeai)
     coreLibraryDesugaring(libs.desugar)
 }

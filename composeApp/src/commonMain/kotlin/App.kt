@@ -26,6 +26,8 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.unit.dp
 import dev.shreyaspatil.ai.client.generativeai.type.GenerateContentResponse
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlin.io.encoding.ExperimentalEncodingApi
 
@@ -62,15 +64,11 @@ fun App() {
                     onClick = {
                         if (prompt.isNotBlank()) {
                             coroutineScope.launch {
-                                showProgress = true
-                                generateContentAsFlow(api, prompt, selectedImageData).collect {
-                                    if (!it.text.isNullOrBlank()) {
-                                        showProgress = false
-                                    }
-                                    content += it.text
-                                }
+                                generateContentAsFlow(api, prompt, selectedImageData)
+                                    .onStart { showProgress = true }
+                                    .onCompletion { showProgress = false }
+                                    .collect { content += it.text }
                                 println(content)
-
                             }
                         }
                     },

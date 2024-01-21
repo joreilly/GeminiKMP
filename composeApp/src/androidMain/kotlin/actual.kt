@@ -40,10 +40,10 @@ actual fun ImagePicker(
     FilePicker(show = show, fileExtensions = fileExtensions) { file ->
         coroutineScope.launch {
             file?.let {
-                val data = getImageByteArray(file, contentResolver)
-                data?.let {
-                    val base64EncodedImageData = Base64.encode(data)
-                    onImageSelected(file.path, base64EncodedImageData)
+                val imageData = getImageByteArray(file, contentResolver)
+                imageData?.let {
+                    val base64EncodedImageData = Base64.encode(imageData)
+                    onImageSelected(file.path, base64EncodedImageData, imageData)
                 }
             }
         }

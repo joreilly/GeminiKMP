@@ -122,7 +122,14 @@ fun App() {
 }
 
 
-fun generateContentAsFlow(api: GeminiApi, prompt: String, imageData: ByteArray? = null): Flow<GenerateContentResponse> {
-
-    return if (imageData != null) api.generateContent(prompt, imageData) else api.generateContent(prompt)
+fun generateContentAsFlow(
+    api: GeminiApi,
+    prompt: String,
+    imageData: ByteArray? = null
+): Flow<GenerateContentResponse> {
+    return if (imageData != null) {
+        api.generateContent(prompt, imageData)
+    } else {
+        api.generateContent(prompt)
+    }
 }

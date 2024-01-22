@@ -1,19 +1,27 @@
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,37 +37,55 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import kotlin.io.encoding.ExperimentalEncodingApi
 
-
-@OptIn(ExperimentalEncodingApi::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun App() {
     val api = remember { GeminiApi() }
-
     val coroutineScope = rememberCoroutineScope()
     var prompt by remember { mutableStateOf("") }
     var selectedImageData by remember { mutableStateOf<ByteArray?>(null) }
     var content by remember { mutableStateOf("") }
     var showProgress by remember { mutableStateOf(false) }
     var showImagePicker by remember { mutableStateOf(false) }
-
     var filePath by remember { mutableStateOf("") }
-
     var image by remember { mutableStateOf<ImageBitmap?>(null) }
+    val canClearPrompt by remember {
+        derivedStateOf {
+            prompt.isNotBlank()
+        }
+    }
 
     MaterialTheme {
         Column(
-            Modifier
+            modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth().padding(16.dp)
         ) {
             FlowRow {
-                TextField(
+                OutlinedTextField(
                     value = prompt,
                     onValueChange = { prompt = it },
-                    modifier = Modifier.weight(7f)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .defaultMinSize(minHeight = 52.dp),
+                    label = {
+                        Text("Search")
+                    },
+                    trailingIcon = {
+                        if (canClearPrompt) {
+                            IconButton(
+                                onClick = { prompt = "" }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Clear,
+                                    contentDescription = "Clear"
+                                )
+                            }
+                        }
+                    }
                 )
+
                 OutlinedButton(
                     onClick = {
                         if (prompt.isNotBlank()) {
@@ -68,13 +94,13 @@ fun App() {
                                     .onStart { showProgress = true }
                                     .onCompletion { showProgress = false }
                                     .collect { content += it.text }
-                                println(content)
                             }
                         }
                     },
+                    enabled = prompt.isNotBlank(),
                     modifier = Modifier
-                        .weight(3f)
                         .padding(all = 4.dp)
+                        .weight(1f)
                         .align(Alignment.CenterVertically)
                 ) {
                     Text("Submit")
@@ -83,8 +109,8 @@ fun App() {
                 OutlinedButton(
                     onClick = { showImagePicker = true },
                     modifier = Modifier
-                        .weight(3f)
                         .padding(all = 4.dp)
+                        .weight(1f)
                         .align(Alignment.CenterVertically)
                 ) {
                     Text("Select Image")
@@ -101,17 +127,29 @@ fun App() {
             }
 
             Spacer(Modifier.height(16.dp))
-            image?.let {
-                Image(
-                    painter = BitmapPainter(it),
-                    contentDescription = "",
-                    modifier = Modifier.height(200.dp)
-                )
+
+            image?.let { imageBitmap ->
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = BitmapPainter(imageBitmap),
+                        contentDescription = "search_image",
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
 
             Spacer(Modifier.height(16.dp))
             if (showProgress) {
-                CircularProgressIndicator()
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator()
+                }
             } else {
                 GeminiMarkdown(content)
             }
@@ -119,15 +157,12 @@ fun App() {
     }
 }
 
-
 fun generateContentAsFlow(
     api: GeminiApi,
     prompt: String,
     imageData: ByteArray? = null
-): Flow<GenerateContentResponse> {
-    return if (imageData != null) {
-        api.generateContent(prompt, imageData)
-    } else {
-        api.generateContent(prompt)
-    }
+): Flow<GenerateContentResponse> = imageData?.let { imageByteArray ->
+    api.generateContent(prompt, imageByteArray)
+} ?: run {
+    api.generateContent(prompt)
 }

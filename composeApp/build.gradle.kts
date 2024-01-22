@@ -134,26 +134,23 @@ compose.desktop {
     }
 }
 
-//val localProperties = Properties()
-//localProperties.load(rootProject.file("local.properties").reader())
-
 buildkonfig {
     packageName = "dev.johnoreilly.gemini"
 
     val localPropsFile = rootProject.file("local.properties")
-    println(localPropsFile)
     val localProperties = Properties()
     if (localPropsFile.exists()) {
-        try {
+        runCatching {
             localProperties.load(localPropsFile.inputStream())
-        } catch (e: Exception) {
+        }.getOrElse {
+            it.printStackTrace()
         }
     }
     defaultConfigs {
         buildConfigField(
             FieldSpec.Type.STRING,
             "GEMINI_API_KEY",
-            localProperties["gemini_api_key"]?.toString() ?: "abc"
+            localProperties["gemini_api_key"]?.toString() ?: ""
         )
     }
 

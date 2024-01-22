@@ -13,17 +13,17 @@ android {
     defaultConfig {
         applicationId = "dev.johnoreilly.gemini"
         minSdk = 30
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
         val localPropsFile = rootProject.file("local.properties")
-        println(localPropsFile)
         val localProperties = Properties()
         if (localPropsFile.exists()) {
-            try {
+            runCatching {
                 localProperties.load(localPropsFile.inputStream())
-            } catch (e: Exception) {
+            }.getOrElse {
+                it.printStackTrace()
             }
         }
 

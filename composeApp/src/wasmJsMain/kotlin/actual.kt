@@ -3,11 +3,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
-import kotlinx.coroutines.await
+import kotlinx.browser.document
 import org.jetbrains.skia.Image
-import kotlin.io.encoding.Base64
+import org.khronos.webgl.ArrayBuffer
+import org.khronos.webgl.Uint8Array
+import org.khronos.webgl.get
+import org.w3c.dom.HTMLInputElement
+import org.w3c.files.FileReader
+import org.w3c.files.get
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 import kotlin.io.encoding.ExperimentalEncodingApi
-import kotlin.js.Promise
 
 
 actual fun ByteArray.toComposeImageBitmap(): ImageBitmap {
@@ -31,50 +38,48 @@ actual fun ImagePicker(
     LaunchedEffect(show) {
         if (show) {
             val data = importImageFile()
-            val rawData = Base64.decode(data.toString())
-            onImageSelected("", rawData)
+            onImageSelected("", data)
         }
     }
 }
 
 
-private suspend fun importImageFile(): String? {
+private suspend fun importImageFile(): ByteArray? {
     return try {
-        pickFile().await<JsString>().toString()
+        pickFile()
     } catch (e: Exception) {
         e.printStackTrace()
         null
     }
 }
 
-private fun pickFile(): Promise<JsString> = js(
-    """
-    (async () => {
-    return new Promise((resolve, reject) => {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.onchange = () => {
-        const file = input.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = () => {
-                let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
-                if ((encoded.length % 4) > 0) {
-                    encoded += '='.repeat(4 - (encoded.length % 4));
-                }          
-                resolve(encoded);
-          }
-          reader.onerror = () => {
-                reject(reader.error);
-                resolve("")
-          }
-          reader.readAsDataURL(file);
-        } else {
-          reject(new Error('No file was selected'));
+private suspend fun pickFile(): ByteArray? = suspendCoroutine { cont ->
+    try {
+        val input = document.createElement("input").apply {
+            setAttribute("type", "file")
+            setAttribute("accept", "image/*")
+        } as HTMLInputElement
+
+        input.onchange = {
+            val file = input.files?.get(0)
+            if (file != null) {
+                val reader = FileReader()
+                reader.onload = { event ->
+                    val arrayBuffer = (event.target as FileReader).result as ArrayBuffer
+                    val array = Uint8Array(arrayBuffer)
+
+                    cont.resume(ByteArray(array.length) { array[it] })
+                }
+                reader.onerror = {
+                    cont.resumeWithException(Exception(reader.error.toString()))
+                }
+                reader.readAsArrayBuffer(file)
+            } else {
+                cont.resumeWithException(Exception("No file was selected"))
+            }
         }
-      };
-      input.click();
-    });
-    })()
-  """,
-)
+        input.click()
+    } catch (e: Exception) {
+        cont.resumeWithException(e)
+    }
+}

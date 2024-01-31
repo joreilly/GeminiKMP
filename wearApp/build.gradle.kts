@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId = "dev.johnoreilly.gemini"
         minSdk = 30
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 

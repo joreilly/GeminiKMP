@@ -90,10 +90,15 @@ fun App() {
                     onClick = {
                         if (prompt.isNotBlank()) {
                             coroutineScope.launch {
+                                println("prompt = $prompt")
+                                content = ""
                                 generateContentAsFlow(api, prompt, selectedImageData)
                                     .onStart { showProgress = true }
                                     .onCompletion { showProgress = false }
-                                    .collect { content += it.text }
+                                    .collect {
+                                        println("response = ${it.text}")
+                                        content += it.text
+                                    }
                             }
                         }
                     },

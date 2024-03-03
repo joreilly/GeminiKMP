@@ -83,6 +83,9 @@ kotlin {
 }
 
 dependencies {
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.wear.compose.navigation)
+
     implementation(libs.compose.foundation)
     implementation(libs.horologist.composables)
     implementation(libs.horologist.compose.layout)

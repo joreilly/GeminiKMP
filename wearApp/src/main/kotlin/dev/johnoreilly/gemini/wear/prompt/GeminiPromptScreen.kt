@@ -92,7 +92,6 @@ private fun GeminiPromptScreen(
     ScreenScaffold(scrollState = columnState) {
         PromptScreen(
             uiState = uiState,
-            columnState = columnState,
             modifier = modifier,
             promptEntry = promptEntry,
             promptDisplay = { GeminiPromptDisplay(it) }

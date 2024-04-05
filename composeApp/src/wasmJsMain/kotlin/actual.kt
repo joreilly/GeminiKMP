@@ -1,4 +1,3 @@
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.ImageBitmap
@@ -14,20 +13,13 @@ import org.w3c.files.get
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
-import kotlin.io.encoding.ExperimentalEncodingApi
 
 
 actual fun ByteArray.toComposeImageBitmap(): ImageBitmap {
     return Image.makeFromEncoded(this).toComposeImageBitmap()
 }
 
-@Composable
-actual fun GeminiMarkdown(content: String) {
-    Text(content)
-}
 
-
-@OptIn(ExperimentalEncodingApi::class)
 @Composable
 actual fun ImagePicker(
     show: Boolean,

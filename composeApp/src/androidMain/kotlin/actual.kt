@@ -19,12 +19,6 @@ actual fun ByteArray.toComposeImageBitmap(): ImageBitmap {
 }
 
 
-@Composable
-actual fun GeminiMarkdown(content: String) {
-    Markdown(content)
-}
-
-
 @OptIn(ExperimentalEncodingApi::class)
 @Composable
 actual fun ImagePicker(

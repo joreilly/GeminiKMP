@@ -58,7 +58,7 @@ kotlin {
             
             implementation(libs.kotlinx.coroutines)
 
-            implementation(libs.koalaplot)
+            implementation(libs.markdown.renderer)
             api(libs.compose.window.size)
 
             api(libs.generativeai)
@@ -70,20 +70,17 @@ kotlin {
 
             implementation(libs.voyager)
             implementation(libs.mpfilepicker)
-            implementation(libs.markdown.renderer)
         }
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.java)
             implementation(libs.mpfilepicker)
-            implementation(libs.markdown.renderer)
         }
 
         appleMain.dependencies {
             implementation(libs.ktor.client.darwin)
             implementation(libs.mpfilepicker)
-            implementation(libs.markdown.renderer)
         }
     }
 }

@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.unit.dp
+import com.mikepenz.markdown.m3.Markdown
 import dev.shreyaspatil.ai.client.generativeai.type.GenerateContentResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onCompletion
@@ -158,7 +159,7 @@ fun App() {
                     CircularProgressIndicator()
                 }
             } else {
-                GeminiMarkdown(content)
+                Markdown(content)
             }
         }
     }

@@ -25,11 +25,6 @@ actual fun ByteArray.toComposeImageBitmap(): ImageBitmap {
 }
 
 @Composable
-actual fun GeminiMarkdown(content: String) {
-    Markdown(content)
-}
-
-@Composable
 actual fun ImagePicker(
     show: Boolean,
     initialDirectory: String?,

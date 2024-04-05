@@ -10,11 +10,6 @@ import org.jetbrains.skia.Image
 actual fun ByteArray.toComposeImageBitmap(): ImageBitmap = Image.makeFromEncoded(this).toComposeImageBitmap()
 
 @Composable
-actual fun GeminiMarkdown(content: String) {
-    Markdown(content)
-}
-
-@Composable
 actual fun ImagePicker(
     show: Boolean,
     initialDirectory: String?,

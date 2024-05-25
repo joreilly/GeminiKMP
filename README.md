@@ -46,3 +46,16 @@ Related posts:
 
 <img width="815" alt="Screenshot 2024-01-14 at 19 26 05" src="https://github.com/joreilly/GeminiKMP/assets/6302/4fd5adda-c9c4-42c3-970c-d1a8cda05b0a">
 
+## Full set of Kotlin Multiplatform/Compose/SwiftUI samples
+
+*  PeopleInSpace (https://github.com/joreilly/PeopleInSpace)
+*  GalwayBus (https://github.com/joreilly/GalwayBus)
+*  Confetti (https://github.com/joreilly/Confetti)
+*  BikeShare (https://github.com/joreilly/BikeShare)
+*  FantasyPremierLeague (https://github.com/joreilly/FantasyPremierLeague)
+*  ClimateTrace (https://github.com/joreilly/ClimateTraceKMP)
+*  GeminiKMP (https://github.com/joreilly/GeminiKMP)
+*  MortyComposeKMM (https://github.com/joreilly/MortyComposeKMM)
+*  StarWars (https://github.com/joreilly/StarWars)
+*  WordMasterKMP (https://github.com/joreilly/WordMasterKMP)
+*  Chip-8 (https://github.com/joreilly/chip-8)

@@ -34,5 +34,6 @@ fun wearMaterialColors() = DefaultMarkdownColors(
     linkText = Color.Blue,
     codeBackground = MaterialTheme.colors.background,
     inlineCodeBackground = MaterialTheme.colors.background,
-    dividerColor = MaterialTheme.colors.secondaryVariant
+    dividerColor = MaterialTheme.colors.secondaryVariant,
+    inlineCodeText = MaterialTheme.colors.primary
 )

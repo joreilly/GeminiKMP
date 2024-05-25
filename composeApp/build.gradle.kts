@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.buildkonfig)
 }
@@ -73,12 +74,10 @@ kotlin {
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
-            implementation(libs.ktor.client.java)
             implementation(libs.mpfilepicker)
         }
 
         appleMain.dependencies {
-            implementation(libs.ktor.client.darwin)
             implementation(libs.mpfilepicker)
         }
     }

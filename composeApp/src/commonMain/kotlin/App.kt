@@ -125,6 +125,30 @@ fun App() {
                     Text("Select Image")
                 }
 
+                OutlinedButton(
+                    onClick = {
+                        prompt=GeminiApi.PROMPT_GENERATE_UI
+                        coroutineScope.launch {
+                            content = ""
+                            generateContentAsFlow(api, prompt, selectedImageData)
+                                .onStart { showProgress = true }
+                                .onCompletion { showProgress = false }
+                                .collect {
+                                    println("response = ${it.text}")
+                                    content += it.text
+                                }
+                        }
+
+                    },
+                    enabled = image != null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 4.dp)
+                        .align(Alignment.CenterVertically)
+                ) {
+                    Text("Generate Compose UI Code")
+                }
+
                 ImagePicker(show = showImagePicker) { file, imageData ->
                     showImagePicker = false
                     filePath = file

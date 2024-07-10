@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -124,6 +125,30 @@ fun App() {
                     Text("Select Image")
                 }
 
+                OutlinedButton(
+                    onClick = {
+                        prompt=GeminiApi.PROMPT_GENERATE_UI
+                        coroutineScope.launch {
+                            content = ""
+                            generateContentAsFlow(api, prompt, selectedImageData)
+                                .onStart { showProgress = true }
+                                .onCompletion { showProgress = false }
+                                .collect {
+                                    println("response = ${it.text}")
+                                    content += it.text
+                                }
+                        }
+
+                    },
+                    enabled = image != null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 4.dp)
+                        .align(Alignment.CenterVertically)
+                ) {
+                    Text("Generate Compose UI Code")
+                }
+
                 ImagePicker(show = showImagePicker) { file, imageData ->
                     showImagePicker = false
                     filePath = file
@@ -159,7 +184,9 @@ fun App() {
                     CircularProgressIndicator()
                 }
             } else {
-                Markdown(content)
+                SelectionContainer {
+                    Markdown(content)
+                }
             }
         }
     }

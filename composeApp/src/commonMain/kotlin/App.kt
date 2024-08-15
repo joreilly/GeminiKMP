@@ -35,6 +35,8 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.unit.dp
 import com.mikepenz.markdown.m3.Markdown
 import dev.shreyaspatil.ai.client.generativeai.type.GenerateContentResponse
+import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
+import io.github.vinceglb.filekit.core.PickerType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
@@ -51,12 +53,20 @@ fun App() {
     var selectedImageData by remember { mutableStateOf<ByteArray?>(null) }
     var content by remember { mutableStateOf("") }
     var showProgress by remember { mutableStateOf(false) }
-    var showImagePicker by remember { mutableStateOf(false) }
     var filePath by remember { mutableStateOf("") }
     var image by remember { mutableStateOf<ImageBitmap?>(null) }
     val canClearPrompt by remember {
         derivedStateOf {
             prompt.isNotBlank()
+        }
+    }
+
+    val imagePickerLauncher = rememberFilePickerLauncher(PickerType.Image) { selectedImage ->
+        coroutineScope.launch {
+            val bytes = selectedImage?.readBytes()
+            selectedImageData = bytes
+            image = bytes?.toComposeImageBitmap()
+            filePath = selectedImage?.path ?: ""
         }
     }
 
@@ -116,7 +126,7 @@ fun App() {
                 }
 
                 OutlinedButton(
-                    onClick = { showImagePicker = true },
+                    onClick = { imagePickerLauncher.launch() },
                     modifier = Modifier
                         .padding(all = 4.dp)
                         .weight(1f)
@@ -147,15 +157,6 @@ fun App() {
                         .align(Alignment.CenterVertically)
                 ) {
                     Text("Generate Compose UI Code")
-                }
-
-                ImagePicker(show = showImagePicker) { file, imageData ->
-                    showImagePicker = false
-                    filePath = file
-                    selectedImageData = imageData
-                    imageData?.let {
-                        image = imageData.toComposeImageBitmap()
-                    }
                 }
             }
 

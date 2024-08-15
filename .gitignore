@@ -9,6 +9,8 @@
 **/build/
 .gradle
 **/.idea/*
+.kotlin
+yarn.lock
 
 *.xcworkspacedata
 

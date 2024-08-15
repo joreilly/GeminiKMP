@@ -62,6 +62,8 @@ kotlin {
             api(libs.compose.window.size)
 
             api(libs.generativeai)
+
+            implementation(libs.filekit.compose)
         }
 
         androidMain.dependencies {
@@ -69,16 +71,10 @@ kotlin {
             implementation(libs.androidx.activity.compose)
 
             implementation(libs.voyager)
-            implementation(libs.mpfilepicker)
         }
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
-            implementation(libs.mpfilepicker)
-        }
-
-        appleMain.dependencies {
-            implementation(libs.mpfilepicker)
         }
     }
 }

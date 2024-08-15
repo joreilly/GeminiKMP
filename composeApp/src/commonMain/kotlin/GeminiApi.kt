@@ -21,7 +21,7 @@ class GeminiApi {
 
 
     val generativeVisionModel = GenerativeModel(
-        modelName = "gemini-pro-vision",
+        modelName = "gemini-1.5-flash",
         apiKey = apiKey
     )
 

@@ -1,15 +1,15 @@
 [versions]
-kotlin = "2.0.20"
+kotlin = "2.0.21"
 kotlinx-coroutines = "1.9.0"
 
 
-agp = "8.5.2"
+agp = "8.7.1"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
-androidx-activityCompose = "1.9.2"
-compose = "1.7.2"
-compose-plugin = "1.7.0-beta02"
+androidx-activityCompose = "1.9.3"
+compose = "1.7.5"
+compose-plugin = "1.7.0"
 composeWindowSize = "0.5.0"
 filekit = "0.8.0"
 generativeai = "0.9.0-1.0.1-wasm"
@@ -41,10 +41,10 @@ markdown-renderer-core = { module = "com.mikepenz:multiplatform-markdown-rendere
 horologist-composables = { module = "com.google.android.horologist:horologist-composables", version.ref = "horologist" }
 horologist-compose-layout = { module = "com.google.android.horologist:horologist-compose-layout", version.ref = "horologist" }
 horologist-ai-ui = { module = "com.google.android.horologist:horologist-ai-ui", version.ref = "horologist" }
-compose-material-iconsext = "androidx.compose.material:material-icons-extended:1.6.7"
+compose-material-iconsext = "androidx.compose.material:material-icons-extended:1.7.5"
 
 voyager = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
-desugar = "com.android.tools:desugar_jdk_libs:2.0.4"
+desugar = "com.android.tools:desugar_jdk_libs:2.1.2"
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

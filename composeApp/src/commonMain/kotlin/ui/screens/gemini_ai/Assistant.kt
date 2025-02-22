@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.mikepenz.markdown.m3.Markdown
 import dev.shreyaspatil.ai.client.generativeai.type.GenerateContentResponse
@@ -47,7 +48,7 @@ import toComposeImageBitmap
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun AsistantScreen() {
+fun AssistantScreen() {
     val api = remember { GeminiApi() }
     val coroutineScope = rememberCoroutineScope()
     var prompt by remember { mutableStateOf("") }
@@ -56,6 +57,7 @@ fun AsistantScreen() {
     var showProgress by remember { mutableStateOf(false) }
     var filePath by remember { mutableStateOf("") }
     var image by remember { mutableStateOf<ImageBitmap?>(null) }
+    val keyboardController = LocalSoftwareKeyboardController.current
     val canClearPrompt by remember {
         derivedStateOf {
             prompt.isNotBlank()
@@ -104,6 +106,7 @@ fun AsistantScreen() {
             OutlinedButton(
                 onClick = {
                     if (prompt.isNotBlank()) {
+                        keyboardController?.hide()
                         coroutineScope.launch {
                             println("prompt = $prompt")
                             content = ""

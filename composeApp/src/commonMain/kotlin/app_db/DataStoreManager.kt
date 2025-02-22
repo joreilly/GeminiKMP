@@ -14,10 +14,10 @@ object DataStoreManager {
     private val preference = createAppDataStore()
     const val THEME_KEY = "theme"
 
-    suspend fun <T : Any> setValue(key: String, value: T) {
+    suspend fun  setValue(key: String, value: String) {
         preference.edit {
             val data = stringPreferencesKey(key)
-            it[data] = value.toString()
+            it[data] = value
         }
     }
 

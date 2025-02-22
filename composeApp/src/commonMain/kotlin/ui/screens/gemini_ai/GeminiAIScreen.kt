@@ -132,7 +132,7 @@ object GeminiAIScreen : Screen {
                     VerticalDivider()
                 }
                 when (viewModel.screen) {
-                    AiScreen.Assistant -> AsistantScreen()
+                    AiScreen.Assistant -> AssistantScreen()
                     AiScreen.Chat -> ChatScreen(viewModel)
                 }
             }

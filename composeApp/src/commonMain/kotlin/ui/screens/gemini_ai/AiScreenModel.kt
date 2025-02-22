@@ -1,6 +1,5 @@
 package ui.screens.gemini_ai
 
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -30,16 +29,12 @@ class AiScreenModel : ScreenModel {
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = null // Provide a default value or fallback
         )
-//        val theme by viewModel.theme.collectAsState() // For StateFlow
 
-    // Optional: Expose as Compose State (for direct Compose use)
-    val themeState: State<String?>
-        get() = mutableStateOf(theme.value)
 
     // Function to update theme
     fun updateTheme() {
         screenModelScope.launch(Dispatchers.Main) {
-            val newTheme = if (themeState.value?.lowercase() == "dark") "light" else "dark"
+            val newTheme = if (theme.value?.lowercase() == "dark") "light" else "dark"
             DataStoreManager.setValue(DataStoreManager.THEME_KEY, newTheme)
         }
     }

@@ -55,8 +55,8 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            
-            implementation(libs.kotlinx.coroutines)
+
+            implementation(libs.kotlinx.coroutines.core)
 
             implementation(libs.markdown.renderer)
             api(libs.compose.window.size)
@@ -64,17 +64,22 @@ kotlin {
             api(libs.generativeai)
 
             implementation(libs.filekit.compose)
+            api(libs.datastore.preferences)
+            api(libs.datastore.core)
+            // voyager is a multiplatform library for viewmodel navigation
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.screenmodel)
         }
 
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
-
-            implementation(libs.voyager)
+            implementation(libs.kotlinx.coroutines.android)
         }
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutines.swing)
         }
     }
 }

@@ -89,7 +89,7 @@ dependencies {
     implementation(libs.horologist.ai.ui)
     implementation(libs.markdown.renderer.core)
     implementation(libs.compose.material.iconsext)
-    implementation(libs.kotlinx.coroutines)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.generativeai)
     coreLibraryDesugaring(libs.desugar)
 }

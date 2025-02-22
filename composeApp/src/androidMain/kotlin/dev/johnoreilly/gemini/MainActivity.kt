@@ -15,6 +15,10 @@ class MainActivity : ComponentActivity() {
             App()
         }
     }
+
+    companion object{
+        val instance = MainActivity()
+    }
 }
 
 @Preview

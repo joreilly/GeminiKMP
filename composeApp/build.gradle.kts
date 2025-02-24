@@ -64,11 +64,13 @@ kotlin {
             api(libs.generativeai)
 
             implementation(libs.filekit.compose)
-            api(libs.datastore.preferences)
-            api(libs.datastore.core)
             // voyager is a multiplatform library for viewmodel navigation
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.screenmodel)
+            // storage data
+            implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.coroutines)
+
         }
 
         androidMain.dependencies {

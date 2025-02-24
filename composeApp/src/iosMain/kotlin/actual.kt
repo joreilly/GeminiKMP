@@ -1,13 +1,10 @@
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import kotlinx.cinterop.ExperimentalForeignApi
+import com.russhwolf.settings.NSUserDefaultsSettings
+import com.russhwolf.settings.ObservableSettings
+import com.russhwolf.settings.Settings
 import org.jetbrains.skia.Image
-import platform.Foundation.NSDocumentDirectory
-import platform.Foundation.NSFileManager
-import platform.Foundation.NSURL
-import platform.Foundation.NSUserDomainMask
+import platform.Foundation.NSUserDefaults
 import platform.UIKit.UIDevice
 
 
@@ -20,19 +17,9 @@ actual fun getPlatform(): Platform {
         UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
     )
 }
-@OptIn(ExperimentalForeignApi::class)
-actual fun createAppDataStore(): DataStore<Preferences> {
-    return appDataStore(
-        producePath = {
-            val documentDirectory: NSURL? = NSFileManager.defaultManager.URLForDirectory(
-                directory = NSDocumentDirectory,
-                inDomain = NSUserDomainMask,
-                appropriateForURL = null,
-                create = false,
-                error = null,
-            )
-            requireNotNull(documentDirectory).path + "/$dataStoreFileName"
-        }
-    )
-
+actual fun getDataSettings(): Settings {
+    return NSUserDefaultsSettings(NSUserDefaults.standardUserDefaults)
+}
+actual fun getDataSettingsFlow(): ObservableSettings? {
+    return NSUserDefaultsSettings(NSUserDefaults.standardUserDefaults)
 }

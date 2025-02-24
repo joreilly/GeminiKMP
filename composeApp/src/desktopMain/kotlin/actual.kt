@@ -1,8 +1,10 @@
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
+import com.russhwolf.settings.ObservableSettings
+import com.russhwolf.settings.PreferencesSettings
+import com.russhwolf.settings.Settings
 import org.jetbrains.skia.Image
+import java.util.prefs.Preferences
 
 actual fun ByteArray.toComposeImageBitmap(): ImageBitmap =
     Image.makeFromEncoded(this).toComposeImageBitmap()
@@ -13,8 +15,10 @@ actual fun getPlatform(): Platform {
     )
 }
 
-actual fun createAppDataStore(): DataStore<Preferences> {
-    return appDataStore(
-        producePath = { dataStoreFileName }
-    )
+actual fun getDataSettings(): Settings {
+    return PreferencesSettings(Preferences.userRoot().node("app_preferences"))
+}
+
+actual fun getDataSettingsFlow(): ObservableSettings? {
+    return PreferencesSettings(Preferences.userRoot().node("app_preferences"))
 }

@@ -14,7 +14,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -26,11 +30,11 @@ import com.mikepenz.markdown.m3.Markdown
 import geminikmp.composeapp.generated.resources.Res
 import geminikmp.composeapp.generated.resources.rotate_right
 import org.jetbrains.compose.resources.painterResource
+import ui.ChatBubble
 import ui.RotatingIcon
 import ui.TextIcon
 import utils.ConnectionState
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ChatScreen(viewModel: AiScreenModel) {
     Column(
@@ -44,29 +48,14 @@ fun ChatScreen(viewModel: AiScreenModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(viewModel.items) { message ->
-                val align = if (message.aiModel.lowercase() == "user") Arrangement.End else Arrangement.Start
-                Row(
-                    Modifier.fillMaxWidth(),
-                    horizontalArrangement = align
-                ) {
-                    TextIcon(
-                        Modifier.fillMaxWidth(0.8f),
-                        text = {
-                            Markdown(
-                                modifier = Modifier
-                                    .padding(8.dp)
-                                    .background(Color.DarkGray, shape = RoundedCornerShape(5.dp))
-                                    .padding(8.dp),
-                                content = message.message
-                            )
-                        },
-                        hArrangement = align
-                    )
-                }
+                ChatBubble(Modifier.fillMaxWidth(), aiMessage = message)
             }
         }
-        TextField(
-            modifier = Modifier.fillMaxWidth(),
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surface)
+                .padding(10.dp),
             value = viewModel.prompt,
             onValueChange = { viewModel.prompt = it },
             trailingIcon = {

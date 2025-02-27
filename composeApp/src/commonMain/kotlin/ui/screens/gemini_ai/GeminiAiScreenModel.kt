@@ -21,7 +21,7 @@ data class AiMessage(
     val message: String
 )
 
-enum class AiScreen {
+enum class AiScreenType {
     Assistant,
     Chat
 }
@@ -29,7 +29,7 @@ enum class AiScreen {
 
 class AiScreenModel : ScreenModel {
     var prompt by mutableStateOf("")
-    var screen by mutableStateOf(AiScreen.Assistant)
+    var screen by mutableStateOf(AiScreenType.Assistant)
     var isLoading by mutableStateOf<ConnectionState>(ConnectionState.Default)
     private val geminiApi = GeminiApi()
 
@@ -40,7 +40,12 @@ class AiScreenModel : ScreenModel {
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = null // Provide a default value or fallback
         )
-    var items by mutableStateOf<List<AiMessage>>(emptyList())
+    var items by mutableStateOf<List<AiMessage>>(listOf(
+        AiMessage("model", "Hello! How can I assist you today?"),
+        AiMessage("user", "Hi there!"),
+        AiMessage("model", "Hello! How can I assist you today?"),
+        AiMessage("user", "Hi there!"),
+    ))
         private set
     private val userChat: Chat = geminiApi.generateChat(items)
 
@@ -72,7 +77,7 @@ class AiScreenModel : ScreenModel {
         }
     }
 
-    fun changeScreen(screen: AiScreen) {
+    fun changeScreen(screen: AiScreenType) {
         this.screen = screen
     }
 

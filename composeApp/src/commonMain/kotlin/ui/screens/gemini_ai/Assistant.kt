@@ -2,6 +2,8 @@ package ui.screens.gemini_ai
 
 import GeminiApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -13,16 +15,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -35,8 +41,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mikepenz.markdown.m3.Markdown
+import com.mikepenz.markdown.model.markdownPadding
 import dev.shreyaspatil.ai.client.generativeai.type.GenerateContentResponse
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerType
@@ -45,6 +53,7 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import toComposeImageBitmap
+import utils.AppConstants
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -77,9 +86,17 @@ fun AssistantScreen() {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
-            .fillMaxWidth().padding(16.dp)
+            .fillMaxWidth()
     ) {
-        FlowRow {
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    color = MaterialTheme.colorScheme.surface,
+                    shape = RoundedCornerShape(bottomEnd = 15.dp, bottomStart = 15.dp)
+                )
+                .padding(vertical = 15.dp, horizontal = 15.dp)
+        ) {
             OutlinedTextField(
                 value = prompt,
                 onValueChange = { prompt = it },
@@ -104,6 +121,10 @@ fun AssistantScreen() {
             )
 
             OutlinedButton(
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary
+                ),
                 onClick = {
                     if (prompt.isNotBlank()) {
                         keyboardController?.hide()
@@ -126,20 +147,34 @@ fun AssistantScreen() {
                     .weight(1f)
                     .align(Alignment.CenterVertically)
             ) {
-                Text("Submit")
+                Text(
+                    "Submit",
+                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
+                )
             }
 
             OutlinedButton(
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary
+                ),
                 onClick = { imagePickerLauncher.launch() },
                 modifier = Modifier
                     .padding(all = 4.dp)
                     .weight(1f)
                     .align(Alignment.CenterVertically)
             ) {
-                Text("Select Image")
+                Text(
+                    "Select Image",
+                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
+                )
             }
 
             OutlinedButton(
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary
+                ),
                 onClick = {
                     prompt = GeminiApi.PROMPT_GENERATE_UI
                     coroutineScope.launch {
@@ -160,7 +195,10 @@ fun AssistantScreen() {
                     .padding(all = 4.dp)
                     .align(Alignment.CenterVertically)
             ) {
-                Text("Generate Compose UI Code")
+                Text(
+                    "Generate Compose UI Code",
+                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
+                )
             }
         }
 
@@ -179,7 +217,7 @@ fun AssistantScreen() {
             }
         }
 
-        Spacer(Modifier.height(16.dp))
+//        Spacer(Modifier.height(16.dp))
         if (showProgress) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -190,7 +228,11 @@ fun AssistantScreen() {
             }
         } else {
             SelectionContainer {
-                Markdown(content)
+//                Markdown(content)
+                Markdown(
+                    modifier = Modifier.fillMaxSize().padding(10.dp),
+                    content = AppConstants.TEST_DATA1,
+                )
             }
         }
     }

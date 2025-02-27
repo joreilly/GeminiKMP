@@ -17,9 +17,12 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -49,7 +53,12 @@ object GeminiAIScreen : Screen {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Gemini") },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                        actionIconContentColor = MaterialTheme.colorScheme.onPrimary
+                    ),
+                    title = { Text("Gemini", style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)) },
                     actions = {
                         IconButton(onClick = { viewModel.updateTheme() }) {
                             Icon(
@@ -66,15 +75,22 @@ object GeminiAIScreen : Screen {
                                 Icon(Icons.Default.MoreVert, contentDescription = null)
                             }
                             DropdownMenu(
+                                containerColor = MaterialTheme.colorScheme.primary,
                                 expanded = expand,
                                 onDismissRequest = { expand = !expand },
                                 content = {
                                     DropdownMenuItem(
-                                        enabled = viewModel.screen != AiScreen.Assistant,
-                                        text = { Text("Assistant") },
-                                        onClick = { viewModel.changeScreen(AiScreen.Assistant) },
+                                        colors = MenuDefaults.itemColors(
+                                            textColor = MaterialTheme.colorScheme.onPrimary
+                                        ),
+                                        enabled = viewModel.screen != AiScreenType.Assistant,
+                                        text = { Text("Assistant", style = MaterialTheme.typography.bodyMedium) },
+                                        onClick = {
+                                            viewModel.changeScreen(AiScreenType.Assistant)
+                                            expand = !expand
+                                        },
                                         leadingIcon = {
-                                            Icon(
+                                            Image(
                                                 modifier = Modifier.size(25.dp),
                                                 painter = painterResource(Res.drawable.assistant),
                                                 contentDescription = "AI Assistant Screen"
@@ -82,9 +98,15 @@ object GeminiAIScreen : Screen {
                                         }
                                     )
                                     DropdownMenuItem(
-                                        enabled = viewModel.screen != AiScreen.Chat,
-                                        text = { Text("Chat") },
-                                        onClick = { viewModel.changeScreen(AiScreen.Chat) },
+                                        colors = MenuDefaults.itemColors(
+                                            textColor = MaterialTheme.colorScheme.onPrimary
+                                        ),
+                                        enabled = viewModel.screen != AiScreenType.Chat,
+                                        text = { Text("Chat", style = MaterialTheme.typography.bodyMedium) },
+                                        onClick = {
+                                            viewModel.changeScreen(AiScreenType.Chat)
+                                            expand = !expand
+                                        },
                                         leadingIcon = {
                                             Image(
                                                 modifier = Modifier.size(25.dp),
@@ -107,8 +129,8 @@ object GeminiAIScreen : Screen {
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         DropdownMenuItem(
-                            text = { Text("Assistant") },
-                            onClick = { viewModel.changeScreen(AiScreen.Assistant) },
+                            text = { Text("Assistant", style = MaterialTheme.typography.bodyMedium) },
+                            onClick = { viewModel.changeScreen(AiScreenType.Assistant) },
                             leadingIcon = {
                                 Image(
                                     modifier = Modifier.size(50.dp),
@@ -118,8 +140,8 @@ object GeminiAIScreen : Screen {
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text("Chat") },
-                            onClick = { viewModel.changeScreen(AiScreen.Chat) },
+                            text = { Text("Chat", style = MaterialTheme.typography.bodyMedium) },
+                            onClick = { viewModel.changeScreen(AiScreenType.Chat) },
                             leadingIcon = {
                                 Image(
                                     modifier = Modifier.size(50.dp),
@@ -132,8 +154,8 @@ object GeminiAIScreen : Screen {
                     VerticalDivider()
                 }
                 when (viewModel.screen) {
-                    AiScreen.Assistant -> AssistantScreen()
-                    AiScreen.Chat -> ChatScreen(viewModel)
+                    AiScreenType.Assistant -> AssistantScreen()
+                    AiScreenType.Chat -> ChatScreen(viewModel)
                 }
             }
         }

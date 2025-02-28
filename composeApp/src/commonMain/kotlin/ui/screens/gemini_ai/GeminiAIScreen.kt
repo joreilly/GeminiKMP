@@ -129,6 +129,7 @@ object GeminiAIScreen : Screen {
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         DropdownMenuItem(
+                            enabled = viewModel.screen != AiScreenType.Assistant,
                             text = { Text("Assistant", style = MaterialTheme.typography.bodyMedium) },
                             onClick = { viewModel.changeScreen(AiScreenType.Assistant) },
                             leadingIcon = {
@@ -140,6 +141,7 @@ object GeminiAIScreen : Screen {
                             }
                         )
                         DropdownMenuItem(
+                            enabled = viewModel.screen != AiScreenType.Chat,
                             text = { Text("Chat", style = MaterialTheme.typography.bodyMedium) },
                             onClick = { viewModel.changeScreen(AiScreenType.Chat) },
                             leadingIcon = {

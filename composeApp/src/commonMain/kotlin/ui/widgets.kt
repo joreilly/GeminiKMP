@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.Dp
@@ -102,6 +101,7 @@ fun ChatBubble(modifier: Modifier = Modifier, aiMessage: AiMessage) {
             leadingIcon = {
                 if (aiMessage.aiModel.lowercase() == "model") {
                     Image(
+                        modifier = Modifier.size(40.dp),
                         painter = painterResource(Res.drawable.assistant),
                         contentDescription = "assistant image"
                     )

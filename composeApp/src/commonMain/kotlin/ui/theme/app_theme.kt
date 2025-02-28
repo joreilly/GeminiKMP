@@ -28,10 +28,10 @@ private val lightScheme = lightColorScheme(
 )
 
 private val darkScheme = darkColorScheme(
-    primary = Color(0, 255, 255), // Cyan (RGB: 0, 255, 255)
-    onPrimary = Color(0, 0, 0), // Black (RGB: 0, 0, 0)
-    secondary = Color(249, 144, 0), // Deep Orange (RGB: 249, 144, 0)
-    onSecondary = Color(0, 0, 0), // Black (RGB: 0, 0, 0)
+    primary = Color(99, 40, 0), // Brown
+    onPrimary = Color(255, 255, 255), // White (RGB: 255, 255, 255)
+    secondary = Color(10, 99, 0), // Green
+    onSecondary = Color.White,
     background = Color(0, 0, 0), // Black (RGB: 0, 0, 0)
     onBackground = Color(255, 255, 255), // White (RGB: 255, 255, 255)
     surface = Color(26, 26, 26), // Dark Gray (RGB: 26, 26, 26)

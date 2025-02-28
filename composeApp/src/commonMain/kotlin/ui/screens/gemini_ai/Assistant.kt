@@ -3,7 +3,6 @@ package ui.screens.gemini_ai
 import GeminiApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -28,7 +27,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -44,7 +42,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mikepenz.markdown.m3.Markdown
-import com.mikepenz.markdown.model.markdownPadding
 import dev.shreyaspatil.ai.client.generativeai.type.GenerateContentResponse
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerType
@@ -53,7 +50,6 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import toComposeImageBitmap
-import utils.AppConstants
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -217,7 +213,7 @@ fun AssistantScreen() {
             }
         }
 
-//        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(16.dp))
         if (showProgress) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -228,10 +224,9 @@ fun AssistantScreen() {
             }
         } else {
             SelectionContainer {
-//                Markdown(content)
                 Markdown(
                     modifier = Modifier.fillMaxSize().padding(10.dp),
-                    content = AppConstants.TEST_DATA1,
+                    content = content
                 )
             }
         }

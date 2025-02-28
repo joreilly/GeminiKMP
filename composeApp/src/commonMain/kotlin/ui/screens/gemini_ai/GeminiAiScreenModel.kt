@@ -40,12 +40,7 @@ class AiScreenModel : ScreenModel {
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = null // Provide a default value or fallback
         )
-    var items by mutableStateOf<List<AiMessage>>(listOf(
-        AiMessage("model", "Hello! How can I assist you today?"),
-        AiMessage("user", "Hi there!"),
-        AiMessage("model", "Hello! How can I assist you today?"),
-        AiMessage("user", "Hi there!"),
-    ))
+    var items by mutableStateOf<List<AiMessage>>(emptyList())
         private set
     private val userChat: Chat = geminiApi.generateChat(items)
 

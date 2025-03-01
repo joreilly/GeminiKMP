@@ -25,6 +25,8 @@ fun wearMaterialTypography() = DefaultMarkdownTypography(
     ordered = MaterialTheme.typography.body1,
     bullet = MaterialTheme.typography.body1,
     list = MaterialTheme.typography.body1,
+    inlineCode = MaterialTheme.typography.body1,
+    link = MaterialTheme.typography.body1
 )
 
 @Composable

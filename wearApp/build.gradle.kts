@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         applicationId = "dev.johnoreilly.gemini"
         minSdk = 30

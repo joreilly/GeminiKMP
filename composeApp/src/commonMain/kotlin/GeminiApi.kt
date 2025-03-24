@@ -7,7 +7,6 @@ import dev.shreyaspatil.ai.client.generativeai.type.PlatformImage
 import dev.shreyaspatil.ai.client.generativeai.type.content
 import kotlinx.coroutines.flow.Flow
 import ui.screens.gemini_ai.AiMessage
-import kotlin.io.encoding.ExperimentalEncodingApi
 
 class GeminiApi {
     companion object {
@@ -23,14 +22,14 @@ class GeminiApi {
     private val apiKey = BuildKonfig.GEMINI_API_KEY
 
 
-    val generativeVisionModel = GenerativeModel(
+    private val generativeVisionModel = GenerativeModel(
         modelName = "gemini-1.5-flash",
         apiKey = apiKey
     )
 
-    val generativeModel = GenerativeModel(
-        modelName = "gemini-pro",
-//        modelName = "gemini-2.0-flash", // use this if you are having issues with gemini-pro
+    private val generativeModel = GenerativeModel(
+//        modelName = "gemini-pro",
+        modelName = "gemini-2.0-flash", // use this if you are having issues with gemini-pro
         apiKey = apiKey
     )
 
@@ -38,7 +37,6 @@ class GeminiApi {
         return generativeModel.generateContentStream(prompt)
     }
 
-    @OptIn(ExperimentalEncodingApi::class)
     fun generateContent(prompt: String, imageData: ByteArray): Flow<GenerateContentResponse> {
         val content = content {
             image(PlatformImage(imageData))

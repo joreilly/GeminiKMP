@@ -23,7 +23,7 @@ kotlin {
         }
         binaries.executable()
     }
-    
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -31,9 +31,9 @@ kotlin {
             }
         }
     }
-    
+
     jvm("desktop")
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -44,9 +44,16 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         val desktopMain by getting
+
+        all {
+            languageSettings {
+                optIn("nl.marc_apps.tts.experimental.ExperimentalVoiceApi")
+                optIn("nl.marc_apps.tts.experimental.ExperimentalDesktopTarget")
+            }
+        }
 
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -70,7 +77,12 @@ kotlin {
             // storage data
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.coroutines)
-
+            // tts
+            implementation("nl.marc-apps:tts:2.8.0")
+            // Optional: Extensions for Compose
+            implementation("nl.marc-apps:tts-compose:2.8.0")
+            //
+            implementation("com.stevdza-san:messagebarkmp:1.0.6")
         }
 
         androidMain.dependencies {

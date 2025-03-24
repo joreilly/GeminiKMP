@@ -10,9 +10,13 @@ sealed class Platform {
     data class Web(val message: String) : Platform()
 }
 
+
 expect fun getPlatform(): Platform
+
 
 expect fun ByteArray.toComposeImageBitmap(): ImageBitmap
 
 expect fun getDataSettings(): Settings
+
 expect fun getDataSettingsFlow(): ObservableSettings?
+

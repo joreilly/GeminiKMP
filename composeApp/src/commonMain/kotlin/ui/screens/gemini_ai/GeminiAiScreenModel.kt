@@ -4,9 +4,9 @@ import GeminiApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import app_db.DataManager
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import core.app_db.DataManager
 import dev.shreyaspatil.ai.client.generativeai.Chat
 import dev.shreyaspatil.ai.client.generativeai.type.content
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +31,7 @@ class AiScreenModel : ScreenModel {
     var prompt by mutableStateOf("")
     var screen by mutableStateOf(AiScreenType.Assistant)
     var isLoading by mutableStateOf<ConnectionState>(ConnectionState.Default)
+
     private val geminiApi = GeminiApi()
 
     // Expose theme as StateFlow for Compose compatibility
@@ -57,6 +58,7 @@ class AiScreenModel : ScreenModel {
                 isLoading = ConnectionState.Success("Success")
             } catch (e: Exception) {
                 isLoading = ConnectionState.Error("Could not generate a response")
+                items = items + AiMessage("model", "Could not generate a response")
                 println("Error: ${e.message}")
                 prompt = ""
             }
@@ -75,5 +77,4 @@ class AiScreenModel : ScreenModel {
     fun changeScreen(screen: AiScreenType) {
         this.screen = screen
     }
-
 }

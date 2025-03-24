@@ -7,7 +7,6 @@ import org.jetbrains.skia.Image
 import platform.Foundation.NSUserDefaults
 import platform.UIKit.UIDevice
 
-
 actual fun ByteArray.toComposeImageBitmap(): ImageBitmap {
     return Image.makeFromEncoded(this).toComposeImageBitmap()
 }
@@ -17,9 +16,13 @@ actual fun getPlatform(): Platform {
         UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
     )
 }
+
 actual fun getDataSettings(): Settings {
     return NSUserDefaultsSettings(NSUserDefaults.standardUserDefaults)
 }
+
 actual fun getDataSettingsFlow(): ObservableSettings? {
     return NSUserDefaultsSettings(NSUserDefaults.standardUserDefaults)
 }
+
+

@@ -50,6 +50,7 @@ object GeminiAIScreen : Screen {
         var expand by mutableStateOf(false)
         val theme by viewModel.theme.collectAsState() // For StateFlow
 
+
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -122,7 +123,7 @@ object GeminiAIScreen : Screen {
                 )
             }
         ) { pv ->
-            Row(Modifier.fillMaxSize().padding(pv)) {
+            Row(Modifier.padding(pv).fillMaxSize()) {
                 if (getPlatform() is Platform.Desktop || getPlatform() is Platform.Web) {
                     Column(
                         Modifier.fillMaxWidth(0.3f).fillMaxHeight(),

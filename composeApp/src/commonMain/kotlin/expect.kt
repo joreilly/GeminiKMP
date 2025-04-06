@@ -1,5 +1,6 @@
 import androidx.compose.ui.graphics.ImageBitmap
 import com.russhwolf.settings.ObservableSettings
+import app.cash.sqldelight.db.SqlDriver
 import com.russhwolf.settings.Settings
 
 
@@ -20,3 +21,7 @@ expect fun getDataSettings(): Settings
 
 expect fun getDataSettingsFlow(): ObservableSettings?
 
+
+expect suspend fun createDatabaseDriver(): SqlDriver
+
+expect fun showAlert(message: String):Unit

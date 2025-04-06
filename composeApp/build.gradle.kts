@@ -10,11 +10,22 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.buildkonfig)
+    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
+//    @OptIn(ExperimentalWasmDsl::class)
+//    wasmJs {
+//        moduleName = "composeApp"
+//        browser {
+//            commonWebpackConfig {
+//                outputFileName = "composeApp.js"
+//            }
+//        }
+//        binaries.executable()
+//    }
+
+    js {
         moduleName = "composeApp"
         browser {
             commonWebpackConfig {
@@ -81,19 +92,34 @@ kotlin {
             implementation("nl.marc-apps:tts:2.8.0")
             // Optional: Extensions for Compose
             implementation("nl.marc-apps:tts-compose:2.8.0")
-            //
-            implementation("com.stevdza-san:messagebarkmp:1.0.6")
+            // Time
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
+            implementation(libs.sqldelight.coroutines) // May fail in WASM
         }
 
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.sqldelight.android)
         }
 
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
+            implementation(libs.sqldelight.jvm)
+        }
+        iosMain.dependencies {
+            implementation(libs.sqldelight.native)
+        }
+
+        jsMain.dependencies {
+            implementation(compose.html.core)
+            // require jsMain not wasmJsMain to use sqldelight
+            implementation("app.cash.sqldelight:web-worker-driver:2.0.2")
+            implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.0.2"))
+            implementation(npm("sql.js", "1.6.2"))
+            implementation(devNpm("copy-webpack-plugin", "9.1.0"))
         }
     }
 }
@@ -168,4 +194,13 @@ buildkonfig {
 
 compose.experimental {
     web.application {}
+}
+
+sqldelight {
+    databases {
+        create("ChatDatabase") {
+            packageName.set("chat.database")
+            generateAsync.set(true)
+        }
+    }
 }

@@ -20,20 +20,25 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mikepenz.markdown.m3.Markdown
+import core.models.ChatMessage
 import geminikmp.composeapp.generated.resources.Res
 import geminikmp.composeapp.generated.resources.copy
 import geminikmp.composeapp.generated.resources.sound
 import org.jetbrains.compose.resources.painterResource
-import ui.screens.gemini_ai.AiMessage
 
 
 @Composable
@@ -94,12 +99,12 @@ fun RotatingIcon(
 @Composable
 fun ChatBubble(
     modifier: Modifier = Modifier,
-    aiMessage: AiMessage,
+    chatMessage: ChatMessage,
     onClick: ((Pair<String, String>) -> Unit)? = null
 ) {
     val hArrange =
-        if (aiMessage.aiModel.lowercase() == "user") Arrangement.End else Arrangement.Start
-    val vAlign = if (aiMessage.aiModel.lowercase() == "user") Alignment.End else Alignment.Start
+        if (chatMessage.sender.lowercase() == "user") Arrangement.End else Arrangement.Start
+    val vAlign = if (chatMessage.sender.lowercase() == "user") Alignment.End else Alignment.Start
     Row(
         modifier = modifier,
         horizontalArrangement = hArrange
@@ -114,13 +119,13 @@ fun ChatBubble(
                     .padding(4.dp)
                     .background(MaterialTheme.colorScheme.background, MaterialTheme.shapes.small)
                     .padding(8.dp),
-                content = aiMessage.message
+                content = chatMessage.message
             )
             if (onClick != null) {
-                Row {
+                Row (verticalAlignment = Alignment.CenterVertically){
                     // speak button icon //
                     IconButton(
-                        onClick = { onClick(Pair("speak", aiMessage.message)) }
+                        onClick = { onClick(Pair("speak", chatMessage.message)) }
                     ) {
                         Image(
                             painter = painterResource(Res.drawable.sound),
@@ -130,12 +135,23 @@ fun ChatBubble(
                     }
                     // copy button icon //
                     IconButton(
-                        onClick = { onClick(Pair("copy", aiMessage.message)) }
+                        onClick = { onClick(Pair("copy", chatMessage.message)) }
                     ) {
                         Image(
                             painter = painterResource(Res.drawable.copy),
                             contentDescription = "Copy",
                             modifier = Modifier.size(24.dp)
+                        )
+                    }
+                    Column {
+                        val time = remember { chatMessage.time.split("//") }
+                        Text(
+                            text = time[0],
+                            style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.W300)
+                        )
+                        Text(
+                            text = time[1],
+                            style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.W300)
                         )
                     }
                 }

@@ -1,0 +1,18 @@
+CREATE TABLE ChatTable (
+id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+message TEXT NOT NULL,
+sender TEXT NOT NULL,
+time TEXT NOT NULL
+);
+
+insertChat:
+INSERT OR REPLACE INTO ChatTable(id, message, sender, time)
+VALUES(?,?,?,?);
+
+getAllChat:
+SELECT * FROM ChatTable;
+
+
+
+deleteAllChat:
+DELETE FROM ChatTable;

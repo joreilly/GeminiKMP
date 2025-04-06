@@ -1,3 +1,4 @@
+import core.models.ChatMessage
 import dev.johnoreilly.gemini.BuildKonfig
 import dev.shreyaspatil.ai.client.generativeai.Chat
 import dev.shreyaspatil.ai.client.generativeai.GenerativeModel
@@ -6,7 +7,7 @@ import dev.shreyaspatil.ai.client.generativeai.type.GenerateContentResponse
 import dev.shreyaspatil.ai.client.generativeai.type.PlatformImage
 import dev.shreyaspatil.ai.client.generativeai.type.content
 import kotlinx.coroutines.flow.Flow
-import ui.screens.gemini_ai.AiMessage
+
 
 class GeminiApi {
     companion object {
@@ -45,10 +46,10 @@ class GeminiApi {
         return generativeVisionModel.generateContentStream(content)
     }
 
-    fun generateChat(prompt: List<AiMessage>): Chat {
+    fun generateChat(prompt: List<ChatMessage>): Chat {
         val history = mutableListOf<Content>()
         prompt.forEach { p ->
-            if (p.aiModel.lowercase() == "user") {
+            if (p.sender.lowercase() == "user") {
                 history.add(content("user") { text(p.message) })
             } else {
                 history.add(content("assistant") { text(p.message) })

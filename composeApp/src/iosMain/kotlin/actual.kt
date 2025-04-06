@@ -6,6 +6,26 @@ import com.russhwolf.settings.Settings
 import org.jetbrains.skia.Image
 import platform.Foundation.NSUserDefaults
 import platform.UIKit.UIDevice
+import app.cash.sqldelight.async.coroutines.synchronous
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
+import chat.database.ChatDatabase
+import platform.UIKit.UIAlertAction
+import platform.UIKit.UIAlertActionStyleDefault
+import platform.UIKit.UIAlertController
+import platform.UIKit.UIApplication
+
+actual suspend fun createDatabaseDriver(): SqlDriver {
+    return NativeSqliteDriver(ChatDatabase.Schema.synchronous(), "objects.db")
+}
+
+actual fun showAlert(message: String) {
+    val alertController = UIAlertController
+        .alertControllerWithTitle(null, message, 1000L)
+    val rootViewController = UIApplication.sharedApplication.keyWindow?.rootViewController
+    rootViewController?.presentViewController(alertController, true, null)
+
+}
 
 actual fun ByteArray.toComposeImageBitmap(): ImageBitmap {
     return Image.makeFromEncoded(this).toComposeImageBitmap()

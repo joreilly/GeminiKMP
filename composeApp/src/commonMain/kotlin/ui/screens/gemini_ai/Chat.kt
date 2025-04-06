@@ -1,6 +1,5 @@
 package ui.screens.gemini_ai
 
-import ContentWithMessageBar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -39,7 +38,7 @@ import kotlinx.coroutines.launch
 import nl.marc_apps.tts.TextToSpeechEngine
 import nl.marc_apps.tts.rememberTextToSpeechOrNull
 import org.jetbrains.compose.resources.painterResource
-import rememberMessageBarState
+import showAlert
 import ui.ChatBubble
 import ui.RotatingIcon
 import utils.ConnectionState
@@ -49,71 +48,68 @@ import utils.ConnectionState
 fun ChatScreen(viewModel: AiScreenModel) {
     val textToSpeech = rememberTextToSpeechOrNull(TextToSpeechEngine.Google)
     val scope = rememberCoroutineScope()
-    val state = rememberMessageBarState()
     val scrollState = rememberLazyListState()
 
-    ContentWithMessageBar(messageBarState = state) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        val keyboardController = LocalSoftwareKeyboardController.current
+        LazyColumn(
+            state = scrollState,
+            modifier = Modifier
+                .weight(1f)
+                .draggable(
+                    orientation = Orientation.Vertical,
+                    state = rememberDraggableState { delta ->
+                        scope.launch {
+                            scrollState.scrollBy(-delta)
+                        }
+                    },
+                ),
+            verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val keyboardController = LocalSoftwareKeyboardController.current
-            LazyColumn(
-                state = scrollState,
-                modifier = Modifier
-                    .weight(1f)
-                    .draggable(
-                        orientation = Orientation.Vertical,
-                        state = rememberDraggableState { delta ->
-                            scope.launch {
-                                scrollState.scrollBy(-delta)
+            items(viewModel.items) { message ->
+                val clipboardManager = LocalClipboardManager.current
+                ChatBubble(Modifier.fillMaxWidth(), chatMessage = message) {
+                    if (it.first.trim().lowercase() == "copy") {
+                        clipboardManager.setText(
+                            annotatedString = buildAnnotatedString {
+                                append(text = it.second)
                             }
-                        },
-                    ),
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                items(viewModel.items) { message ->
-                    val clipboardManager = LocalClipboardManager.current
-                    ChatBubble(Modifier.fillMaxWidth(), aiMessage = message) {
-                        if (it.first.trim().lowercase() == "copy") {
-                            clipboardManager.setText(
-                                annotatedString = buildAnnotatedString {
-                                    append(text = it.second)
-                                }
-                            )
-                            state.addSuccess("Copied to clipboard")
-                        } else if (it.first.trim().lowercase() == "speak") {
-                            scope.launch(Dispatchers.Default) {
-                                textToSpeech?.say(it.second.replace("*", ""))
-                            }
+                        )
+                        showAlert("Copied to clipboard")
+                    } else if (it.first.trim().lowercase() == "speak") {
+                        scope.launch(Dispatchers.Default) {
+                            textToSpeech?.say(it.second.replace("*", ""))
                         }
                     }
                 }
             }
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(10.dp),
-                value = viewModel.prompt,
-                onValueChange = { viewModel.prompt = it },
-                trailingIcon = {
-                    IconButton(onClick = {
-                        keyboardController?.hide()
-                        viewModel.sendMessage()
-                    }) {
-                        if (viewModel.isLoading is ConnectionState.Loading) {
-                            RotatingIcon(painterResource(Res.drawable.rotate_right))
-                        } else {
-                            Icon(
-                                Icons.AutoMirrored.Filled.Send,
-                                "Send message"
-                            )
-                        }
+        }
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surface)
+                .padding(10.dp),
+            value = viewModel.prompt,
+            onValueChange = { viewModel.prompt = it },
+            trailingIcon = {
+                IconButton(onClick = {
+                    keyboardController?.hide()
+                    viewModel.sendMessage()
+                }) {
+                    if (viewModel.isLoading is ConnectionState.Loading) {
+                        RotatingIcon(painterResource(Res.drawable.rotate_right))
+                    } else {
+                        Icon(
+                            Icons.AutoMirrored.Filled.Send,
+                            "Send message"
+                        )
                     }
                 }
-            )
-        }
+            }
+        )
     }
 }

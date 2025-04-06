@@ -63,7 +63,8 @@ kotlin {
 
             api(libs.generativeai)
 
-            implementation(libs.filekit.compose)
+            implementation(libs.filekit.dialogs.compose)
+            implementation(libs.filekit.coil)
             // voyager is a multiplatform library for viewmodel navigation
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.screenmodel)

@@ -1,19 +1,17 @@
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
+import app.cash.sqldelight.async.coroutines.synchronous
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
+import chat.database.ChatDatabase
 import com.russhwolf.settings.NSUserDefaultsSettings
 import com.russhwolf.settings.ObservableSettings
 import com.russhwolf.settings.Settings
 import org.jetbrains.skia.Image
 import platform.Foundation.NSUserDefaults
-import platform.UIKit.UIDevice
-import app.cash.sqldelight.async.coroutines.synchronous
-import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.native.NativeSqliteDriver
-import chat.database.ChatDatabase
-import platform.UIKit.UIAlertAction
-import platform.UIKit.UIAlertActionStyleDefault
 import platform.UIKit.UIAlertController
 import platform.UIKit.UIApplication
+import platform.UIKit.UIDevice
 
 actual suspend fun createDatabaseDriver(): SqlDriver {
     return NativeSqliteDriver(ChatDatabase.Schema.synchronous(), "objects.db")

@@ -21,7 +21,6 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import utils.ConnectionState
-import kotlin.time.TimeSource
 
 //data class AiMessage(
 //    val id: Long? = null,

@@ -1,7 +1,6 @@
 package ui.screens.gemini_ai
 
 import GeminiApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,20 +35,20 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mikepenz.markdown.m3.Markdown
 import dev.shreyaspatil.ai.client.generativeai.type.GenerateContentResponse
-import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
-import io.github.vinceglb.filekit.core.PickerType
+import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.coil.AsyncImage
+import io.github.vinceglb.filekit.dialogs.FileKitType
+import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
+import io.github.vinceglb.filekit.readBytes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import toComposeImageBitmap
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -57,11 +56,9 @@ fun AssistantScreen() {
     val api = remember { GeminiApi() }
     val coroutineScope = rememberCoroutineScope()
     var prompt by remember { mutableStateOf("") }
-    var selectedImageData by remember { mutableStateOf<ByteArray?>(null) }
     var content by remember { mutableStateOf("") }
     var showProgress by remember { mutableStateOf(false) }
-    var filePath by remember { mutableStateOf("") }
-    var image by remember { mutableStateOf<ImageBitmap?>(null) }
+    var selectedImage by remember { mutableStateOf<PlatformFile?>(null) }
     val keyboardController = LocalSoftwareKeyboardController.current
     val canClearPrompt by remember {
         derivedStateOf {
@@ -69,12 +66,9 @@ fun AssistantScreen() {
         }
     }
 
-    val imagePickerLauncher = rememberFilePickerLauncher(PickerType.Image) { selectedImage ->
+    val imagePickerLauncher = rememberFilePickerLauncher(FileKitType.Image) { image ->
         coroutineScope.launch {
-            val bytes = selectedImage?.readBytes()
-            selectedImageData = bytes
-            image = bytes?.toComposeImageBitmap()
-            filePath = selectedImage?.path ?: ""
+            selectedImage = image
         }
     }
 
@@ -127,7 +121,7 @@ fun AssistantScreen() {
                         coroutineScope.launch {
                             println("prompt = $prompt")
                             content = ""
-                            generateContentAsFlow(api, prompt, selectedImageData)
+                            generateContentAsFlow(api, prompt, selectedImage?.readBytes())
                                 .onStart { showProgress = true }
                                 .onCompletion { showProgress = false }
                                 .collect {
@@ -175,7 +169,7 @@ fun AssistantScreen() {
                     prompt = GeminiApi.PROMPT_GENERATE_UI
                     coroutineScope.launch {
                         content = ""
-                        generateContentAsFlow(api, prompt, selectedImageData)
+                        generateContentAsFlow(api, prompt, selectedImage?.readBytes())
                             .onStart { showProgress = true }
                             .onCompletion { showProgress = false }
                             .collect {
@@ -185,7 +179,7 @@ fun AssistantScreen() {
                     }
 
                 },
-                enabled = image != null,
+                enabled = selectedImage != null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(all = 4.dp)
@@ -200,13 +194,13 @@ fun AssistantScreen() {
 
         Spacer(Modifier.height(16.dp))
 
-        image?.let { imageBitmap ->
+        selectedImage?.let {
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    painter = BitmapPainter(imageBitmap),
+                AsyncImage(
+                    file = selectedImage,
                     contentDescription = "search_image",
                     modifier = Modifier.fillMaxSize()
                 )

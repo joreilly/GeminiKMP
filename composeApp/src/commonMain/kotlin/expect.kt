@@ -12,7 +12,5 @@ sealed class Platform {
 
 expect fun getPlatform(): Platform
 
-expect fun ByteArray.toComposeImageBitmap(): ImageBitmap
-
 expect fun getDataSettings(): Settings
 expect fun getDataSettingsFlow(): ObservableSettings?

@@ -7,11 +7,6 @@ import org.jetbrains.skia.Image
 import platform.Foundation.NSUserDefaults
 import platform.UIKit.UIDevice
 
-
-actual fun ByteArray.toComposeImageBitmap(): ImageBitmap {
-    return Image.makeFromEncoded(this).toComposeImageBitmap()
-}
-
 actual fun getPlatform(): Platform {
     return Platform.Ios(
         UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion

@@ -10,7 +10,7 @@ androidx-activityCompose = "1.9.3"
 compose = "1.7.5"
 compose-plugin = "1.7.1"
 composeWindowSize = "0.5.0"
-filekit = "0.8.0"
+filekit = "0.10.0-beta01"
 generativeai = "0.9.0-1.0.1-wasm"
 horologist = "0.6.20"
 junit = "4.13.2"
@@ -38,7 +38,8 @@ compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview"
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 compose-window-size = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "composeWindowSize" }
 
-filekit-compose = { module = "io.github.vinceglb:filekit-compose", version.ref = "filekit" }
+filekit-dialogs-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
+filekit-coil = { module = "io.github.vinceglb:filekit-coil", version.ref = "filekit" }
 
 markdown-renderer = { module = "com.mikepenz:multiplatform-markdown-renderer-m3", version.ref = "markdownRenderer" }
 markdown-renderer-core = { module = "com.mikepenz:multiplatform-markdown-renderer", version.ref = "markdownRenderer" }

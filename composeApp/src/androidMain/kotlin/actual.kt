@@ -9,10 +9,6 @@ import com.russhwolf.settings.SharedPreferencesSettings
 import dev.AndroidJsonDatabase
 import dev.johnoreilly.gemini.MainActivity
 
-actual fun ByteArray.toComposeImageBitmap(): ImageBitmap {
-    return BitmapFactory.decodeByteArray(this, 0, size).asImageBitmap()
-}
-
 actual fun getPlatform(): Platform {
     return Platform.Android("Android ${Build.VERSION.SDK_INT}")
 }
@@ -40,3 +36,8 @@ actual fun showAlert(message: String) {
 
 
 actual fun getJsonDatabase(): JsonDatabase = AndroidJsonDatabase()
+
+actual fun ByteArray.toComposeImageBitmap(): ImageBitmap{
+    val bitmap = BitmapFactory.decodeByteArray(this, 0, this.size)
+    return bitmap.asImageBitmap()
+}

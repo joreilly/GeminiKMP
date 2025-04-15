@@ -14,7 +14,6 @@ import dev.shreyaspatil.ai.client.generativeai.type.content
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -44,7 +43,6 @@ class AiScreenModel : ScreenModel {
 
     // Expose theme as StateFlow for Compose compatibility
     val theme: StateFlow<String?> = DataManager.getValueFlow(DataManager.THEME_KEY)
-        .onStart { ChatDbManager.initializeDatabase() }
         .stateIn(
             scope = screenModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
@@ -56,7 +54,6 @@ class AiScreenModel : ScreenModel {
 
     init {
         screenModelScope.launch(Dispatchers.Main) {
-            ChatDbManager.initializeDatabase()
             items = ChatDbManager.getObjectToStores()
             userChat = geminiApi.generateChat(items)
         }
@@ -88,7 +85,7 @@ class AiScreenModel : ScreenModel {
                 isLoading = ConnectionState.Error("Could not generate a response")
                 items = items + ChatMessage(
                     sender = "model",
-                    message = "Sorry! could not get a response",
+                    message = "Sorry! could not get a response $e",
                     time = "${nowTime.date} // ${nowTime.hour}:${nowTime.minute}:${nowTime.second}"
                 )
                 ChatDbManager.insertObjectToStore(items.last())
@@ -111,7 +108,6 @@ class AiScreenModel : ScreenModel {
         screenModelScope.launch(Dispatchers.Main) {
             ChatDbManager.deleteAllObjectFromStore()
             items = emptyList()
-            DataManager.clear()
         }
     }
 

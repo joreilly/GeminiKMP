@@ -1,7 +1,7 @@
 import androidx.compose.ui.graphics.ImageBitmap
 import com.russhwolf.settings.ObservableSettings
-import app.cash.sqldelight.db.SqlDriver
 import com.russhwolf.settings.Settings
+import kotlinx.coroutines.flow.Flow
 
 
 sealed class Platform {
@@ -21,7 +21,20 @@ expect fun getDataSettings(): Settings
 
 expect fun getDataSettingsFlow(): ObservableSettings?
 
+//typealias MySqlDriver = SqlDriver
+//expect suspend fun createDatabaseDriver(): MySqlDriver
 
-expect suspend fun createDatabaseDriver(): SqlDriver
 
-expect fun showAlert(message: String):Unit
+expect fun showAlert(message: String)
+
+typealias ListString = String
+
+interface JsonDatabase {
+    fun createData(tableName: String, data: ListString): Boolean
+    fun getData(tableName: String): ListString
+    fun getDataFlow(tableName: String): Flow<ListString>
+    fun deleteData(tableName: String): Boolean
+}
+
+
+expect fun getJsonDatabase(): JsonDatabase

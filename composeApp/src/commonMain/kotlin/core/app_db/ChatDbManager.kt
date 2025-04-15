@@ -1,41 +1,45 @@
 package core.app_db
 
-import chat.database.ChatDatabase
-import chat.database.ChatDatabaseQueries
+import JsonDatabase
 import core.models.ChatMessage
-import createDatabaseDriver
+import getJsonDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
 
 object ChatDbManager {
 
-    private var database: ChatDatabase? = null
-    private var dbQuery: ChatDatabaseQueries? = null
+    private val jsonDatabase: JsonDatabase = getJsonDatabase()
+    private const val CHAT_TABLE = "chat.json"
 
-    suspend fun initializeDatabase() {
-        database = ChatDatabase(createDatabaseDriver())
-        dbQuery = database?.chatDatabaseQueries
+
+    suspend fun insertObjectToStore(chatMessage: ChatMessage) {
+        withContext(Dispatchers.Main) {
+            println("DATA1 ")
+            val data = jsonDatabase.getData(CHAT_TABLE)
+            println("DATA2 : $data")
+//            if (data.isEmpty()) data = "[]"
+            val jdata = Json.decodeFromString<List<ChatMessage>>(data)
+            val jData = jdata.toMutableList()
+            jData.add(chatMessage)
+            println("DATA3 : $jdata")
+            jsonDatabase.createData(CHAT_TABLE, Json.encodeToString(jData))
+        }
     }
 
-    suspend fun insertObjectToStore(chatDataClass: ChatMessage) {
-        dbQuery?.insertChat(
-            message = chatDataClass.message,
-            sender = chatDataClass.sender,
-            time = chatDataClass.time,
-            id = chatDataClass.id
-        )
-    }
-
-    fun getObjectToStores(): List<ChatMessage> {
-        return dbQuery?.getAllChat()?.executeAsList()?.map {
-            ChatMessage(
-                id = it.id,
-                message = it.message,
-                sender = it.sender,
-                time = it.time
-            )
-        } ?: emptyList()
+    suspend fun getObjectToStores(): List<ChatMessage> {
+        return withContext(Dispatchers.Main) {
+            println("DATA ")
+            val data = jsonDatabase.getData(CHAT_TABLE)
+            println("DATA : $data")
+            if (data.isEmpty()) return@withContext emptyList()
+            Json.decodeFromString<List<ChatMessage>>(data).toMutableList()
+        }
     }
 
     suspend fun deleteAllObjectFromStore() {
-        dbQuery?.deleteAllChat()
+        withContext(Dispatchers.Main) {
+            jsonDatabase.deleteData(CHAT_TABLE)
+        }
     }
 }

@@ -27,6 +27,10 @@ object DataManager {
             ?: flowOf(getValue(key)) // Emit a single value if no flow is available
     }
 
+    fun clear(key: String) {
+        settings.remove(key)
+    }
+
     fun clear() {
         settings.clear()
         settingsFlow?.clear()

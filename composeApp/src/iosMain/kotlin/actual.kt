@@ -1,9 +1,5 @@
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
-import app.cash.sqldelight.async.coroutines.synchronous
-import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.native.NativeSqliteDriver
-import chat.database.ChatDatabase
 import com.russhwolf.settings.NSUserDefaultsSettings
 import com.russhwolf.settings.ObservableSettings
 import com.russhwolf.settings.Settings
@@ -13,9 +9,7 @@ import platform.UIKit.UIAlertController
 import platform.UIKit.UIApplication
 import platform.UIKit.UIDevice
 
-actual suspend fun createDatabaseDriver(): SqlDriver {
-    return NativeSqliteDriver(ChatDatabase.Schema.synchronous(), "objects.db")
-}
+actual fun getJsonDatabase(): JsonDatabase = IosJsonDB()
 
 actual fun showAlert(message: String) {
     val alertController = UIAlertController

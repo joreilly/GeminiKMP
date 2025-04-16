@@ -21,10 +21,6 @@ expect fun getDataSettings(): Settings
 
 expect fun getDataSettingsFlow(): ObservableSettings?
 
-//typealias MySqlDriver = SqlDriver
-//expect suspend fun createDatabaseDriver(): MySqlDriver
-
-
 expect fun showAlert(message: String)
 
 typealias ListString = String

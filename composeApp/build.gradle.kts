@@ -13,7 +13,7 @@ plugins {
 }
 
 kotlin {
-    @OptIn(ExperimentalWasmDsl::class)
+    @OptIn(ExperimentalWasmDsl::class, org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "composeApp"
         browser {
@@ -109,8 +109,9 @@ kotlin {
             }
         }
 
-        iosMain.dependencies {
-        }
+        iosMain.dependencies {}
+
+        wasmJsMain.dependencies { }
     }
 }
 

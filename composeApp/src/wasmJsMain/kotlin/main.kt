@@ -7,3 +7,14 @@ fun main() {
         App()
     }
 }
+// For jsMain
+//@OptIn(ExperimentalComposeUiApi::class)
+//fun main() {
+//    onWasmReady {
+//        val body = document.body ?: return@onWasmReady
+//    CanvasBasedWindow(canvasElementId = "ComposeTarget") {
+////        ComposeViewport(body) {
+//            App()
+//        }
+//    }
+//}

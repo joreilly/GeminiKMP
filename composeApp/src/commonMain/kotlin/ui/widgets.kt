@@ -9,6 +9,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,22 +17,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mikepenz.markdown.m3.Markdown
+import core.models.ChatMessage
 import geminikmp.composeapp.generated.resources.Res
-import geminikmp.composeapp.generated.resources.assistant
+import geminikmp.composeapp.generated.resources.copy
+import geminikmp.composeapp.generated.resources.sound
 import org.jetbrains.compose.resources.painterResource
-import ui.screens.gemini_ai.AiMessage
 
 
 @Composable
@@ -90,37 +95,65 @@ fun RotatingIcon(
 
 
 @Composable
-fun ChatBubble(modifier: Modifier = Modifier, aiMessage: AiMessage) {
-    val align = if (aiMessage.aiModel.lowercase() == "user") Arrangement.End else Arrangement.Start
+fun ChatBubble(
+    modifier: Modifier = Modifier,
+    chatMessage: ChatMessage,
+    onClick: ((Pair<String, String>) -> Unit)? = null
+) {
+    val hArrange =
+        if (chatMessage.sender.lowercase() == "user") Arrangement.End else Arrangement.Start
+    val vAlign = if (chatMessage.sender.lowercase() == "user") Alignment.End else Alignment.Start
     Row(
         modifier = modifier,
-        horizontalArrangement = align
+        horizontalArrangement = hArrange
     ) {
-        TextIcon(
-            Modifier.fillMaxWidth(0.7f),
-            leadingIcon = {
-                if (aiMessage.aiModel.lowercase() == "model") {
-                    Image(
-                        modifier = Modifier.size(40.dp),
-                        painter = painterResource(Res.drawable.assistant),
-                        contentDescription = "assistant image"
-                    )
-                }
-            },
-            text = {
-                Markdown(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .padding(8.dp)
-                        .background(
-                            MaterialTheme.colorScheme.surface,
-                            shape = RoundedCornerShape(5.dp)
+        Column(
+            Modifier.fillMaxWidth(0.9f),
+            horizontalAlignment = vAlign
+        ) {
+            Markdown(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(4.dp)
+                    .background(MaterialTheme.colorScheme.background, MaterialTheme.shapes.small)
+                    .padding(8.dp),
+                content = chatMessage.message
+            )
+            if (onClick != null) {
+                Row (verticalAlignment = Alignment.CenterVertically){
+                    // speak button icon //
+                    IconButton(
+                        onClick = { onClick(Pair("speak", chatMessage.message)) }
+                    ) {
+                        Image(
+                            painter = painterResource(Res.drawable.sound),
+                            contentDescription = "Speak",
+                            modifier = Modifier.size(24.dp)
                         )
-                        .padding(8.dp),
-                    content = aiMessage.message
-                )
-            },
-            hArrangement = align
-        )
+                    }
+                    // copy button icon //
+                    IconButton(
+                        onClick = { onClick(Pair("copy", chatMessage.message)) }
+                    ) {
+                        Image(
+                            painter = painterResource(Res.drawable.copy),
+                            contentDescription = "Copy",
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                    Column {
+                        val time = remember { chatMessage.time.split("//") }
+                        Text(
+                            text = time[0],
+                            style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.W300)
+                        )
+                        Text(
+                            text = time[1],
+                            style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.W300)
+                        )
+                    }
+                }
+            }
+        }
     }
 }

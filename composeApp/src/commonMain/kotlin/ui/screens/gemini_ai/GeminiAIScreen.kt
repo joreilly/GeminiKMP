@@ -37,6 +37,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import geminikmp.composeapp.generated.resources.Res
 import geminikmp.composeapp.generated.resources.assistant
 import geminikmp.composeapp.generated.resources.chat
+import geminikmp.composeapp.generated.resources.dust
 import geminikmp.composeapp.generated.resources.moon
 import geminikmp.composeapp.generated.resources.sun
 import getPlatform
@@ -50,6 +51,7 @@ object GeminiAIScreen : Screen {
         var expand by mutableStateOf(false)
         val theme by viewModel.theme.collectAsState() // For StateFlow
 
+
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -58,7 +60,12 @@ object GeminiAIScreen : Screen {
                         titleContentColor = MaterialTheme.colorScheme.onPrimary,
                         actionIconContentColor = MaterialTheme.colorScheme.onPrimary
                     ),
-                    title = { Text("Gemini", style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)) },
+                    title = {
+                        Text(
+                            "Gemini",
+                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
+                        )
+                    },
                     actions = {
                         IconButton(onClick = { viewModel.updateTheme() }) {
                             Icon(
@@ -69,6 +76,15 @@ object GeminiAIScreen : Screen {
                                     painterResource(Res.drawable.sun),
                                 contentDescription = null
                             )
+                        }
+                        if (viewModel.screen == AiScreenType.Chat) {
+                            IconButton(onClick = { viewModel.clearDatabase() }) {
+                                Icon(
+                                    modifier = Modifier.size(25.dp),
+                                    painter = painterResource(Res.drawable.dust),
+                                    contentDescription = null
+                                )
+                            }
                         }
                         if (getPlatform() is Platform.Android || getPlatform() is Platform.Ios) {
                             IconButton(onClick = { expand = !expand }) {
@@ -84,7 +100,12 @@ object GeminiAIScreen : Screen {
                                             textColor = MaterialTheme.colorScheme.onPrimary
                                         ),
                                         enabled = viewModel.screen != AiScreenType.Assistant,
-                                        text = { Text("Assistant", style = MaterialTheme.typography.bodyMedium) },
+                                        text = {
+                                            Text(
+                                                "Assistant",
+                                                style = MaterialTheme.typography.bodyMedium
+                                            )
+                                        },
                                         onClick = {
                                             viewModel.changeScreen(AiScreenType.Assistant)
                                             expand = !expand
@@ -102,7 +123,12 @@ object GeminiAIScreen : Screen {
                                             textColor = MaterialTheme.colorScheme.onPrimary
                                         ),
                                         enabled = viewModel.screen != AiScreenType.Chat,
-                                        text = { Text("Chat", style = MaterialTheme.typography.bodyMedium) },
+                                        text = {
+                                            Text(
+                                                "Chat",
+                                                style = MaterialTheme.typography.bodyMedium
+                                            )
+                                        },
                                         onClick = {
                                             viewModel.changeScreen(AiScreenType.Chat)
                                             expand = !expand
@@ -122,7 +148,7 @@ object GeminiAIScreen : Screen {
                 )
             }
         ) { pv ->
-            Row(Modifier.fillMaxSize().padding(pv)) {
+            Row(Modifier.padding(pv).fillMaxSize()) {
                 if (getPlatform() is Platform.Desktop || getPlatform() is Platform.Web) {
                     Column(
                         Modifier.fillMaxWidth(0.3f).fillMaxHeight(),
@@ -130,7 +156,12 @@ object GeminiAIScreen : Screen {
                     ) {
                         DropdownMenuItem(
                             enabled = viewModel.screen != AiScreenType.Assistant,
-                            text = { Text("Assistant", style = MaterialTheme.typography.bodyMedium) },
+                            text = {
+                                Text(
+                                    "Assistant",
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            },
                             onClick = { viewModel.changeScreen(AiScreenType.Assistant) },
                             leadingIcon = {
                                 Image(

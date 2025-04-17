@@ -13,7 +13,18 @@ plugins {
 }
 
 kotlin {
-    @OptIn(ExperimentalWasmDsl::class)
+
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "1.8"
+            }
+        }
+    }
+
+    jvm("desktop")
+
+    @OptIn(ExperimentalWasmDsl::class, org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "composeApp"
         browser {
@@ -23,17 +34,7 @@ kotlin {
         }
         binaries.executable()
     }
-    
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
-    
-    jvm("desktop")
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -44,9 +45,15 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
-        val desktopMain by getting
+
+        all {
+            languageSettings {
+                optIn("nl.marc_apps.tts.experimental.ExperimentalVoiceApi")
+                optIn("nl.marc_apps.tts.experimental.ExperimentalDesktopTarget")
+            }
+        }
 
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -71,25 +78,37 @@ kotlin {
             // storage data
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.coroutines)
+            // Time
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
+            implementation(libs.kotlinx.serialization.json)
 
         }
-
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.kotlinx.coroutines.android)
         }
 
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutines.swing)
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation(libs.kotlinx.coroutines.swing)
+                implementation("nl.marc-apps:tts:2.5.0")
+            }
         }
+
+        iosMain.dependencies {}
+
+        wasmJsMain.dependencies {
+            implementation("nl.marc-apps:tts:2.5.0")
+        }
+
     }
 }
 
 android {
     namespace = "dev.johnoreilly.gemini"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = 35
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")

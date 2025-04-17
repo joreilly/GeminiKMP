@@ -1,7 +1,7 @@
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import app_db.DataManager
+import core.app_db.DataManager
 import cafe.adriel.voyager.navigator.Navigator
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.screens.gemini_ai.GeminiAIScreen

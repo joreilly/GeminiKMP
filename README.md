@@ -1,4 +1,4 @@
-![kotlin-version](https://img.shields.io/badge/kotlin-2.1.10-blue?logo=kotlin)
+![kotlin-version](https://img.shields.io/badge/kotlin-2.1.20-blue?logo=kotlin)
 
 Kotlin/Compose Multiplatform sample to demonstrate Gemini Generative AI APIs (text and image based queries). 
 Uses [Generative AI SDK](https://github.com/PatilShreyas/generative-ai-kmp).

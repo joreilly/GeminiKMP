@@ -1,25 +1,25 @@
 [versions]
-kotlin = "2.1.10"
+kotlin = "2.1.20"
 kotlinx-coroutines = "1.10.1"
 
-agp = "8.9.0"
+agp = "8.9.1"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
-androidx-activityCompose = "1.9.3"
-compose = "1.7.5"
+androidx-activityCompose = "1.10.1"
+compose = "1.7.8"
 compose-plugin = "1.7.1"
 composeWindowSize = "0.5.0"
 filekit = "0.10.0-beta01"
-generativeai = "0.9.0-1.0.1-wasm"
+generativeai = "0.9.0-1.1.0"
 horologist = "0.6.20"
 junit = "4.13.2"
 multiplatformSettings = "1.3.0"
 buildkonfig = "0.15.2"
-markdownRenderer = "0.26.0"
-wearCompose = "1.4.0"
-voyagerVersion = "1.1.0-beta02"
-kotlinx-serialization = "1.8.0"
+markdownRenderer = "0.27.0"
+wearCompose = "1.4.1"
+voyagerVersion = "1.1.0-beta03"
+kotlinx-serialization = "1.8.1"
 
 
 [libraries]
@@ -47,7 +47,7 @@ markdown-renderer-core = { module = "com.mikepenz:multiplatform-markdown-rendere
 horologist-composables = { module = "com.google.android.horologist:horologist-composables", version.ref = "horologist" }
 horologist-compose-layout = { module = "com.google.android.horologist:horologist-compose-layout", version.ref = "horologist" }
 horologist-ai-ui = { module = "com.google.android.horologist:horologist-ai-ui", version.ref = "horologist" }
-compose-material-iconsext = "androidx.compose.material:material-icons-extended:1.7.5"
+compose-material-iconsext = "androidx.compose.material:material-icons-extended:1.7.8"
 
 desugar = "com.android.tools:desugar_jdk_libs:2.1.2"
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }

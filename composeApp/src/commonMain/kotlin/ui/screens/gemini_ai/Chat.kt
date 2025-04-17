@@ -84,7 +84,6 @@ fun ChatScreen(viewModel: AiScreenModel) {
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surface)
                 .padding(10.dp),
             value = viewModel.prompt,
             onValueChange = { viewModel.prompt = it },

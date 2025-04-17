@@ -15,23 +15,17 @@ object ChatDbManager {
 
     suspend fun insertObjectToStore(chatMessage: ChatMessage) {
         withContext(Dispatchers.Main) {
-            println("DATA1 ")
             val data = jsonDatabase.getData(CHAT_TABLE)
-            println("DATA2 : $data")
-//            if (data.isEmpty()) data = "[]"
             val jdata = Json.decodeFromString<List<ChatMessage>>(data)
             val jData = jdata.toMutableList()
             jData.add(chatMessage)
-            println("DATA3 : $jdata")
             jsonDatabase.createData(CHAT_TABLE, Json.encodeToString(jData))
         }
     }
 
     suspend fun getObjectToStores(): List<ChatMessage> {
         return withContext(Dispatchers.Main) {
-            println("DATA ")
             val data = jsonDatabase.getData(CHAT_TABLE)
-            println("DATA : $data")
             if (data.isEmpty()) return@withContext emptyList()
             Json.decodeFromString<List<ChatMessage>>(data).toMutableList()
         }

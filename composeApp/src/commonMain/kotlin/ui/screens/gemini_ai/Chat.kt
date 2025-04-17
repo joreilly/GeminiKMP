@@ -31,8 +31,6 @@ import geminikmp.composeapp.generated.resources.Res
 import geminikmp.composeapp.generated.resources.rotate_right
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import nl.marc_apps.tts.TextToSpeechEngine
-import nl.marc_apps.tts.rememberTextToSpeechOrNull
 import org.jetbrains.compose.resources.painterResource
 import showAlert
 import ui.ChatBubble
@@ -42,7 +40,6 @@ import utils.ConnectionState
 
 @Composable
 fun ChatScreen(viewModel: AiScreenModel) {
-    val textToSpeech = rememberTextToSpeechOrNull(TextToSpeechEngine.Google)
     val scope = rememberCoroutineScope()
     val scrollState = rememberLazyListState()
 
@@ -78,7 +75,7 @@ fun ChatScreen(viewModel: AiScreenModel) {
                         showAlert("Copied to clipboard")
                     } else if (it.first.trim().lowercase() == "speak") {
                         scope.launch(Dispatchers.Default) {
-                            textToSpeech?.say(it.second.replace("*", ""))
+                            viewModel.textToSpeech.speak(it.second.replace("*", ""))
                         }
                     }
                 }

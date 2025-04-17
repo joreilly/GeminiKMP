@@ -78,10 +78,6 @@ kotlin {
             // storage data
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.coroutines)
-            // tts
-            implementation("nl.marc-apps:tts:2.8.0")
-            // Optional: Extensions for Compose
-            implementation("nl.marc-apps:tts-compose:2.8.0")
             // Time
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
             implementation(libs.kotlinx.serialization.json)
@@ -97,12 +93,16 @@ kotlin {
             dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation(libs.kotlinx.coroutines.swing)
+                implementation("nl.marc-apps:tts:2.5.0")
             }
         }
 
         iosMain.dependencies {}
 
-        wasmJsMain.dependencies { }
+        wasmJsMain.dependencies {
+            implementation("nl.marc-apps:tts:2.5.0")
+        }
+
     }
 }
 

@@ -40,3 +40,5 @@ actual fun getDataSettings(): Settings {
 actual fun getDataSettingsFlow(): ObservableSettings? {
     return null
 }
+
+actual fun getTextToSpeech(): TextToSpeech = WebTextToSpeech()

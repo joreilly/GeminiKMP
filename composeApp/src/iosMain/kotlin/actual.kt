@@ -38,3 +38,4 @@ actual fun getDataSettingsFlow(): ObservableSettings? {
 }
 
 
+actual fun getTextToSpeech(): TextToSpeech = IosTextToSpeech()

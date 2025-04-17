@@ -33,3 +33,5 @@ actual fun getDataSettings(): Settings {
 actual fun getDataSettingsFlow(): ObservableSettings? {
     return PreferencesSettings(Preferences.userRoot().node("app_preferences"))
 }
+
+actual fun getTextToSpeech(): TextToSpeech = DesktopTextToSpeech()

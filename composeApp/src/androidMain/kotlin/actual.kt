@@ -6,7 +6,8 @@ import androidx.compose.ui.graphics.asImageBitmap
 import com.russhwolf.settings.ObservableSettings
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
-import dev.AndroidJsonDatabase
+import dev.johnoreilly.gemini.AndroidJsonDatabase
+import dev.johnoreilly.gemini.AndroidTextToSpeech
 import dev.johnoreilly.gemini.MainActivity
 
 actual fun getPlatform(): Platform {
@@ -37,7 +38,9 @@ actual fun showAlert(message: String) {
 
 actual fun getJsonDatabase(): JsonDatabase = AndroidJsonDatabase()
 
-actual fun ByteArray.toComposeImageBitmap(): ImageBitmap{
+actual fun ByteArray.toComposeImageBitmap(): ImageBitmap {
     val bitmap = BitmapFactory.decodeByteArray(this, 0, this.size)
     return bitmap.asImageBitmap()
 }
+
+actual fun getTextToSpeech(): TextToSpeech = AndroidTextToSpeech()

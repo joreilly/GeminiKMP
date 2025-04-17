@@ -1,9 +1,8 @@
-package dev
+package dev.johnoreilly.gemini
 
 import JsonDatabase
 import ListString
 import android.content.Context
-import dev.johnoreilly.gemini.MainActivity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json

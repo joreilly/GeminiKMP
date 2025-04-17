@@ -11,6 +11,7 @@ import core.app_db.DataManager
 import core.models.ChatMessage
 import dev.shreyaspatil.ai.client.generativeai.Chat
 import dev.shreyaspatil.ai.client.generativeai.type.content
+import getTextToSpeech
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -38,6 +39,7 @@ class AiScreenModel : ScreenModel {
     var prompt by mutableStateOf("")
     var screen by mutableStateOf(AiScreenType.Assistant)
     var isLoading by mutableStateOf<ConnectionState>(ConnectionState.Default)
+    val textToSpeech = getTextToSpeech()
 
     private val geminiApi = GeminiApi()
 

@@ -10,7 +10,7 @@ class IosTextToSpeech : TextToSpeech {
 
     override suspend fun speak(text: String) {
         val utterance = AVSpeechUtterance.speechUtteranceWithString(text)
-        utterance.voice = AVSpeechSynthesisVoice().voiceWithLanguage("en-US")
+//        utterance.voice = AVSpeechSynthesisVoice().voiceWithLanguage("en-US")
         synthesizer.speakUtterance(utterance)
     }
 

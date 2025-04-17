@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -72,7 +71,6 @@ fun AssistantScreen() {
         }
     }
 
-    // MAIN SCREEN
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -81,10 +79,6 @@ fun AssistantScreen() {
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(bottomEnd = 15.dp, bottomStart = 15.dp)
-                )
                 .padding(vertical = 15.dp, horizontal = 15.dp)
         ) {
             OutlinedTextField(

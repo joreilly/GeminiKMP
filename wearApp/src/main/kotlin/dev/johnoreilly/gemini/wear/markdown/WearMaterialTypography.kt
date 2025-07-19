@@ -3,6 +3,7 @@ package dev.johnoreilly.gemini.wear.markdown
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.wear.compose.material.LocalContentColor
@@ -26,7 +27,11 @@ fun wearMaterialTypography() = DefaultMarkdownTypography(
     bullet = MaterialTheme.typography.body1,
     list = MaterialTheme.typography.body1,
     inlineCode = MaterialTheme.typography.body1,
-    link = MaterialTheme.typography.body1
+    textLink = TextLinkStyles(
+        style = SpanStyle()
+    ),
+    link = MaterialTheme.typography.body1,
+    table = MaterialTheme.typography.body1,
 )
 
 @Composable
@@ -37,5 +42,7 @@ fun wearMaterialColors() = DefaultMarkdownColors(
     codeBackground = MaterialTheme.colors.background,
     inlineCodeBackground = MaterialTheme.colors.background,
     dividerColor = MaterialTheme.colors.secondaryVariant,
-    inlineCodeText = MaterialTheme.colors.primary
+    inlineCodeText = MaterialTheme.colors.primary,
+    tableText = MaterialTheme.colors.primary,
+    tableBackground = MaterialTheme.colors.background
 )

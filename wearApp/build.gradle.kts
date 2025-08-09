@@ -38,7 +38,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-        isCoreLibraryDesugaringEnabled = true
     }
 
     buildFeatures {
@@ -91,5 +90,4 @@ dependencies {
     implementation(libs.compose.material.iconsext)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.generativeai)
-    coreLibraryDesugaring(libs.desugar)
 }

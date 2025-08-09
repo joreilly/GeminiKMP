@@ -10,7 +10,7 @@ androidx-activityCompose = "1.10.1"
 compose = "1.8.3"
 compose-plugin = "1.8.2"
 composeWindowSize = "0.5.0"
-filekit = "0.10.0-beta04"
+filekit = "0.10.0"
 generativeai = "0.9.0-1.1.0"
 horologist = "0.6.23"
 junit = "4.13.2"
@@ -49,7 +49,6 @@ horologist-compose-layout = { module = "com.google.android.horologist:horologist
 horologist-ai-ui = { module = "com.google.android.horologist:horologist-ai-ui", version.ref = "horologist" }
 compose-material-iconsext = "androidx.compose.material:material-icons-extended:1.7.8"
 
-desugar = "com.android.tools:desugar_jdk_libs:2.1.2"
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
 multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }

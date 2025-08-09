@@ -15,29 +15,43 @@ enum class AppTheme {
 }
 
 private val lightScheme = lightColorScheme(
-    primary = Color(10, 99, 0),
-    onPrimary = Color.White,
-    secondary = Color(99, 40, 0), // Brown
-    onSecondary = Color(255, 255, 255), // White (RGB: 255, 255, 255)
-    background = Color.White,
-    onBackground = Color.Black,
-    surface = Color.LightGray,
-    onSurface = Color(0, 0, 0), // Black (RGB: 0, 0, 0)
-    error = Color.Red,
-    onError = Color.White
+    // Gemini-inspired light palette
+    primary = Color(0xFF0B57D0),
+    onPrimary = Color(0xFFFFFFFF),
+    primaryContainer = Color(0xFFD3E3FD),
+    onPrimaryContainer = Color(0xFF041E49),
+    secondary = Color(0xFF7C4DFF),
+    onSecondary = Color(0xFFFFFFFF),
+    secondaryContainer = Color(0xFFE9DDFF),
+    onSecondaryContainer = Color(0xFF1E0059),
+    background = Color(0xFFFFFFFF),
+    onBackground = Color(0xFF1F1F1F),
+    surface = Color(0xFFFFFFFF),
+    onSurface = Color(0xFF1F1F1F),
+    surfaceVariant = Color(0xFFE0E3E7),
+    onSurfaceVariant = Color(0xFF45474A),
+    error = Color(0xFFB3261E),
+    onError = Color(0xFFFFFFFF)
 )
 
 private val darkScheme = darkColorScheme(
-    primary = Color(99, 40, 0), // Brown
-    onPrimary = Color(255, 255, 255), // White (RGB: 255, 255, 255)
-    secondary = Color(10, 99, 0), // Green
-    onSecondary = Color.White,
-    background = Color(0, 0, 0), // Black (RGB: 0, 0, 0)
-    onBackground = Color(255, 255, 255), // White (RGB: 255, 255, 255)
-    surface = Color(26, 26, 26), // Dark Gray (RGB: 26, 26, 26)
-    onSurface = Color(255, 255, 255), // White (RGB: 255, 255, 255)
-    error = Color(255, 176, 32), // Red (RGB: 255, 176, 32)
-    onError = Color(0, 0, 0) // Black (RGB: 0, 0, 0)
+    // Gemini-inspired dark palette
+    primary = Color(0xFFA8C7FA),
+    onPrimary = Color(0xFF102A56),
+    primaryContainer = Color(0xFF0842A0),
+    onPrimaryContainer = Color(0xFFD3E3FD),
+    secondary = Color(0xFFCBB9FF),
+    onSecondary = Color(0xFF2E1A64),
+    secondaryContainer = Color(0xFF4F378B),
+    onSecondaryContainer = Color(0xFFEADDFF),
+    background = Color(0xFF0B0F19),
+    onBackground = Color(0xFFE6E9EF),
+    surface = Color(0xFF0B0F19),
+    onSurface = Color(0xFFE6E9EF),
+    surfaceVariant = Color(0xFF2A2F3A),
+    onSurfaceVariant = Color(0xFFBCC0C7),
+    error = Color(0xFFF2B8B5),
+    onError = Color(0xFF601410)
 )
 
 

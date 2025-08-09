@@ -100,9 +100,21 @@ fun ChatBubble(
     chatMessage: ChatMessage,
     onClick: ((Pair<String, String>) -> Unit)? = null
 ) {
-    val hArrange =
-        if (chatMessage.sender.lowercase() == "user") Arrangement.End else Arrangement.Start
-    val vAlign = if (chatMessage.sender.lowercase() == "user") Alignment.End else Alignment.Start
+    val isUser = chatMessage.sender.lowercase() == "user"
+    val hArrange = if (isUser) Arrangement.End else Arrangement.Start
+    val vAlign = if (isUser) Alignment.End else Alignment.Start
+
+    val containerColor = if (isUser) {
+        MaterialTheme.colorScheme.primaryContainer
+    } else {
+        MaterialTheme.colorScheme.surfaceVariant
+    }
+    val contentColor = if (isUser) {
+        MaterialTheme.colorScheme.onPrimaryContainer
+    } else {
+        MaterialTheme.colorScheme.onSurfaceVariant
+    }
+
     Row(
         modifier = modifier,
         horizontalArrangement = hArrange
@@ -111,16 +123,21 @@ fun ChatBubble(
             Modifier.fillMaxWidth(0.9f),
             horizontalAlignment = vAlign
         ) {
-            Markdown(
-                modifier = Modifier
-                    .wrapContentSize()
-                    .padding(4.dp)
-                    .background(MaterialTheme.colorScheme.background, MaterialTheme.shapes.small)
-                    .padding(8.dp),
-                content = chatMessage.message
-            )
+            androidx.compose.material3.Surface(
+                color = containerColor,
+                contentColor = contentColor,
+                shape = MaterialTheme.shapes.medium,
+                tonalElevation = 2.dp,
+            ) {
+                Markdown(
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    content = chatMessage.message
+                )
+            }
             if (onClick != null) {
-                Row (verticalAlignment = Alignment.CenterVertically){
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 2.dp)) {
                     // speak button icon //
                     IconButton(
                         onClick = { onClick(Pair("speak", chatMessage.message)) }
@@ -128,7 +145,7 @@ fun ChatBubble(
                         Image(
                             painter = painterResource(Res.drawable.sound),
                             contentDescription = "Speak",
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(22.dp)
                         )
                     }
                     // copy button icon //
@@ -138,10 +155,10 @@ fun ChatBubble(
                         Image(
                             painter = painterResource(Res.drawable.copy),
                             contentDescription = "Copy",
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(22.dp)
                         )
                     }
-                    Column {
+                    Column(modifier = Modifier.padding(start = 4.dp)) {
                         val time = remember { chatMessage.time.split("//") }
                         Text(
                             text = time[0],

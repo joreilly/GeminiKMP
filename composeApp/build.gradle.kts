@@ -102,7 +102,7 @@ kotlin {
 
 android {
     namespace = "dev.johnoreilly.gemini"
-    compileSdk = 35
+    compileSdk = 36
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")

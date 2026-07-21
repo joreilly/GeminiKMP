@@ -12,7 +12,7 @@ class AndroidJsonDatabase : JsonDatabase {
     override fun createData(tableName: String, data: ListString): Boolean {
         return try {
             val jsonString = Json.encodeToString(data)
-            MainActivity.instance.openFileOutput(tableName, Context.MODE_PRIVATE).use {
+            AppContext.instance.openFileOutput(tableName, Context.MODE_PRIVATE).use {
                 it.write(jsonString.toByteArray())
             }
             true
@@ -25,7 +25,7 @@ class AndroidJsonDatabase : JsonDatabase {
 
     override fun getData(tableName: String): ListString {
         return try {
-            val file = File(MainActivity.instance.filesDir, tableName)
+            val file = File(AppContext.instance.filesDir, tableName)
             if (!file.exists()) return "[]"
             Json.decodeFromString<String>(file.readText())
         } catch (e: Exception) {
@@ -43,7 +43,7 @@ class AndroidJsonDatabase : JsonDatabase {
 
     override fun deleteData(tableName: String): Boolean {
         return try {
-            val file = File(MainActivity.instance.filesDir, tableName)
+            val file = File(AppContext.instance.filesDir, tableName)
             file.delete()
         } catch (e: Exception) {
             e.printStackTrace()

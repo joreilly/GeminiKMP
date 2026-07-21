@@ -1,20 +1,7 @@
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.window.CanvasBasedWindow
+import androidx.compose.ui.window.ComposeViewport
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    CanvasBasedWindow(canvasElementId = "ComposeTarget") {
-        App()
-    }
+    ComposeViewport(content = { App() })
 }
-// For jsMain
-//@OptIn(ExperimentalComposeUiApi::class)
-//fun main() {
-//    onWasmReady {
-//        val body = document.body ?: return@onWasmReady
-//    CanvasBasedWindow(canvasElementId = "ComposeTarget") {
-////        ComposeViewport(body) {
-//            App()
-//        }
-//    }
-//}

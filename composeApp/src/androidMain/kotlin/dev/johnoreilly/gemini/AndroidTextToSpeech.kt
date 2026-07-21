@@ -4,7 +4,7 @@ import TextToSpeech
 import java.util.Locale
 
 class AndroidTextToSpeech : TextToSpeech {
-    private val tts = android.speech.tts.TextToSpeech(MainActivity.instance, null)
+    private val tts = android.speech.tts.TextToSpeech(AppContext.instance, null)
     init {
         tts.language = Locale.US
     }

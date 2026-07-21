@@ -13,7 +13,10 @@ struct ComposeView: UIViewControllerRepresentable {
 struct ContentView: View {
     var body: some View {
         ComposeView()
-                .ignoresSafeArea(.keyboard) // Compose has own keyboard handler
+                // Let Compose draw edge-to-edge; its Scaffold/TopAppBar apply the
+                // status-bar and home-indicator insets, so the app bar colour fills
+                // the status-bar area instead of leaving a white strip.
+                .ignoresSafeArea()
     }
 }
 

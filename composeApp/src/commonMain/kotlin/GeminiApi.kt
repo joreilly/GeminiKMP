@@ -24,13 +24,12 @@ class GeminiApi {
 
 
     private val generativeVisionModel = GenerativeModel(
-        modelName = "gemini-1.5-flash",
+        modelName = "gemini-3.6-flash",
         apiKey = apiKey
     )
 
     private val generativeModel = GenerativeModel(
-//        modelName = "gemini-pro",
-        modelName = "gemini-2.0-flash", // use this if you are having issues with gemini-pro
+        modelName = "gemini-3.6-flash",
         apiKey = apiKey
     )
 
@@ -52,7 +51,7 @@ class GeminiApi {
             if (p.sender.lowercase() == "user") {
                 history.add(content("user") { text(p.message) })
             } else {
-                history.add(content("assistant") { text(p.message) })
+                history.add(content("model") { text(p.message) })
             }
         }
         return generativeModel.startChat(history)

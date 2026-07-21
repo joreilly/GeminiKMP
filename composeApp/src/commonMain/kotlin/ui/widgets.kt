@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -114,19 +115,24 @@ fun ChatBubble(
     } else {
         MaterialTheme.colorScheme.onSurfaceVariant
     }
+    val bubbleShape = if (isUser) {
+        RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp, bottomStart = 16.dp, bottomEnd = 4.dp)
+    } else {
+        RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp, bottomStart = 4.dp, bottomEnd = 16.dp)
+    }
 
     Row(
         modifier = modifier,
         horizontalArrangement = hArrange
     ) {
         Column(
-            Modifier.fillMaxWidth(0.9f),
+            Modifier.fillMaxWidth(0.85f),
             horizontalAlignment = vAlign
         ) {
             androidx.compose.material3.Surface(
                 color = containerColor,
                 contentColor = contentColor,
-                shape = MaterialTheme.shapes.medium,
+                shape = bubbleShape,
                 tonalElevation = 2.dp,
             ) {
                 Markdown(

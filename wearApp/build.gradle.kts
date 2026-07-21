@@ -4,13 +4,12 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
-    kotlin("android")
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.compose.compiler)
 }
 
 android {
-    compileSdk = 35
+    compileSdk = 37
     defaultConfig {
         applicationId = "dev.johnoreilly.gemini"
         minSdk = 30
@@ -36,8 +35,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     buildFeatures {
@@ -49,12 +48,6 @@ android {
         unitTests {
             isIncludeAndroidResources = true
         }
-    }
-
-    kotlinOptions {
-        this.jvmTarget = "1.8"
-        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
-        freeCompilerArgs += "-opt-in=com.google.android.horologist.annotations.ExperimentalHorologistApi"
     }
 
     packaging {
@@ -71,10 +64,10 @@ android {
 }
 
 kotlin {
-    sourceSets.all {
-        languageSettings {
-            optIn("kotlin.RequiresOptIn")
-        }
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        optIn.add("kotlin.RequiresOptIn")
+        optIn.add("com.google.android.horologist.annotations.ExperimentalHorologistApi")
     }
 }
 

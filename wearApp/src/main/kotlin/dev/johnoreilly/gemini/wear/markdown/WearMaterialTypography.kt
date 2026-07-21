@@ -6,7 +6,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
-import androidx.wear.compose.material.LocalContentColor
 import androidx.wear.compose.material.MaterialTheme
 import com.mikepenz.markdown.model.DefaultMarkdownColors
 import com.mikepenz.markdown.model.DefaultMarkdownTypography
@@ -30,19 +29,14 @@ fun wearMaterialTypography() = DefaultMarkdownTypography(
     textLink = TextLinkStyles(
         style = SpanStyle()
     ),
-    link = MaterialTheme.typography.body1,
     table = MaterialTheme.typography.body1,
 )
 
 @Composable
 fun wearMaterialColors() = DefaultMarkdownColors(
     text = Color.White,
-    codeText = LocalContentColor.current,
-    linkText = Color.Blue,
     codeBackground = MaterialTheme.colors.background,
     inlineCodeBackground = MaterialTheme.colors.background,
     dividerColor = MaterialTheme.colors.secondaryVariant,
-    inlineCodeText = MaterialTheme.colors.primary,
-    tableText = MaterialTheme.colors.primary,
     tableBackground = MaterialTheme.colors.background
 )

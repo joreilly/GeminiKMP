@@ -8,7 +8,7 @@ import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
 import dev.johnoreilly.gemini.AndroidJsonDatabase
 import dev.johnoreilly.gemini.AndroidTextToSpeech
-import dev.johnoreilly.gemini.MainActivity
+import dev.johnoreilly.gemini.AppContext
 
 actual fun getPlatform(): Platform {
     return Platform.Android("Android ${Build.VERSION.SDK_INT}")
@@ -16,20 +16,20 @@ actual fun getPlatform(): Platform {
 
 actual fun getDataSettings(): Settings {
     val sharedPreferences =
-        MainActivity.instance.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        AppContext.instance.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
     return SharedPreferencesSettings(sharedPreferences)
 }
 
 actual fun getDataSettingsFlow(): ObservableSettings? {
     val sharedPreferences =
-        MainActivity.instance.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        AppContext.instance.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
     return SharedPreferencesSettings(sharedPreferences)
 }
 
 
 actual fun showAlert(message: String) {
     android.widget.Toast.makeText(
-        MainActivity.instance,
+        AppContext.instance,
         message,
         android.widget.Toast.LENGTH_SHORT
     ).show()

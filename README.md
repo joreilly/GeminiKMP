@@ -1,4 +1,4 @@
-![kotlin-version](https://img.shields.io/badge/kotlin-2.2.0-blue?logo=kotlin)
+![kotlin-version](https://img.shields.io/badge/kotlin-2.4.10-blue?logo=kotlin)
 
 Kotlin/Compose Multiplatform sample to demonstrate Gemini Generative AI APIs (text and image based queries). 
 Uses [Generative AI SDK](https://github.com/PatilShreyas/generative-ai-kmp).
@@ -11,7 +11,25 @@ Running on
 * Desktop
 * Web (Wasm)
 
-Set your Gemini API key (`gemini_api_key`) in `local.properties`
+Set your Gemini API key (`gemini_api_key`) in `local.properties` (which should also
+contain your Android `sdk.dir`).
+
+## Building
+
+The project is split into per-platform modules:
+
+* `androidApp` — Android application
+* `wearApp` — Wear OS application
+* `composeApp` — shared Kotlin Multiplatform code plus the Desktop and Web (Wasm) entry points
+* `iosApp` — iOS application (Xcode project)
+
+Run each target with:
+
+* **Android** — `./gradlew :androidApp:installDebug` (or run the `androidApp` configuration from Android Studio)
+* **Wear OS** — `./gradlew :wearApp:installDebug`
+* **Desktop** — `./gradlew :composeApp:hotRunDesktop` (or `packageDistributionForCurrentOS` to build a native installer)
+* **Web (Wasm)** — `./gradlew :composeApp:wasmJsBrowserDevelopmentRun`
+* **iOS** — open `iosApp/iosApp.xcodeproj` in Xcode and run
 
 Related posts:
 * [Exploring use of Gemini Generative AI APIs in a Kotlin/Compose Multiplatform project](https://johnoreilly.dev/posts/gemini-kotlin-multiplatform/)
@@ -20,33 +38,23 @@ Related posts:
 
 ## Screenshots
 
-### iOS
-
-![Simulator Screenshot - iPhone 15 Pro - 2024-01-19 at 19 15 53](https://github.com/joreilly/GeminiKMP/assets/6302/91e5d4f5-7cb5-40d4-95fb-c5d87bac7918)
-
-
 ### Android
 
+| Assistant | Chat |
+|:---:|:---:|
+| <img src="screenshots/android_assistant.png" width="260"/> | <img src="screenshots/android_chat.png" width="260"/> |
 
-![Screenshot_1705691519](https://github.com/joreilly/GeminiKMP/assets/6302/668145c1-1dcf-4cd5-8b1d-a04f7ebd6866)
+### iOS
 
+<img src="screenshots/ios.png" width="260"/>
 
-### Compose for Desktop
+### Wear OS
 
-<img width="815" alt="Screenshot 2024-01-19 at 19 03 52" src="https://github.com/joreilly/GeminiKMP/assets/6302/7435e8c4-7e1f-4851-91b5-52db90a39d46">
-
-
-<img width="815" alt="Screenshot 2024-01-14 at 17 41 26" src="https://github.com/joreilly/GeminiKMP/assets/6302/22176939-80a1-45df-878c-c75807f85a10">
-
-
-
-
+<img src="screenshots/wear.png" width="240"/>
 
 ### Wasm based Compose for Web
 
-<img width="815" alt="Screenshot 2023-12-31 at 13 01 02" src="https://github.com/joreilly/GeminiKMP/assets/6302/f128bf8f-499b-40e9-a4bd-0674aa0f9240">
-
-<img width="815" alt="Screenshot 2024-01-14 at 19 26 05" src="https://github.com/joreilly/GeminiKMP/assets/6302/4fd5adda-c9c4-42c3-970c-d1a8cda05b0a">
+<img src="screenshots/web.png" width="640"/>
 
 ## Full set of Kotlin Multiplatform/Compose/SwiftUI samples
 

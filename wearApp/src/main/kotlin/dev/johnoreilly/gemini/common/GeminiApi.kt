@@ -6,7 +6,7 @@ import dev.shreyaspatil.ai.client.generativeai.type.GenerateContentResponse
 
 class GeminiApi {
     val generativeModel = GenerativeModel(
-        modelName = "gemini-1.5-flash",
+        modelName = "gemini-3.6-flash",
         apiKey = BuildConfig.GEMINI_API_KEY
     )
 

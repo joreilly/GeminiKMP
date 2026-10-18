@@ -19,7 +19,7 @@ buildkonfig = "0.22.0"
 markdownRenderer = "0.43.0"
 wearCompose = "1.6.2"
 voyagerVersion = "1.1.0-beta03"
-kotlinx-serialization = "1.9.0"
+kotlinx-serialization = "1.11.0"
 
 
 [libraries]

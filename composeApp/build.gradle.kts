@@ -92,14 +92,14 @@ kotlin {
             dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation(libs.kotlinx.coroutines.swing)
-                implementation("nl.marc-apps:tts:2.5.0")
+                implementation("nl.marc-apps:tts:3.0.0")
             }
         }
 
         iosMain.dependencies {}
 
         wasmJsMain.dependencies {
-            implementation("nl.marc-apps:tts:2.5.0")
+            implementation("nl.marc-apps:tts:3.0.0")
         }
 
     }

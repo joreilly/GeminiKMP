@@ -38,5 +38,7 @@ fun wearMaterialColors() = DefaultMarkdownColors(
     codeBackground = MaterialTheme.colors.background,
     inlineCodeBackground = MaterialTheme.colors.background,
     dividerColor = MaterialTheme.colors.secondaryVariant,
-    tableBackground = MaterialTheme.colors.background
+    tableBackground = MaterialTheme.colors.background,
+    highlightText = MaterialTheme.colors.onSecondary,
+    highlightBackground = MaterialTheme.colors.secondary,
 )
